@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from threading import Thread
+import os
 
 class MCPClient:
     """
@@ -136,66 +137,89 @@ class MCPRequestHandler(BaseHTTPRequestHandler):
                         "data": tools
                     })
                 except Exception as e:
+                    print(f"获取工具列表失败: {str(e)}")  # 添加错误日志
+                    import traceback
+                    print(traceback.format_exc())  # 添加详细的错误堆栈
                     self._send_response(500, {
                         "success": False,
                         "error": str(e)
                     })
 
-            asyncio.run_coroutine_threadsafe(list_tools(), mcp_client._loop)
-        else:
-            self._send_response(404, {
-                "success": False,
-                "error": "未找到该端点"
-            })
-
-    def do_POST(self):
-        """处理POST请求"""
-        parsed_path = urlparse(self.path)
-        
-        if parsed_path.path == '/tool/call':
+            # 使用 Future 来等待异步操作完成
+            future = asyncio.run_coroutine_threadsafe(list_tools(), mcp_client._loop)
             try:
-                body = json.loads(self._read_body())
-                tool_name = body.get('tool_name')
-                tool_args = body.get('tool_args', {})
-                
-                if not tool_name:
-                    self._send_response(400, {
-                        "success": False,
-                        "error": "缺少tool_name参数"
-                    })
-                    return
-
-                # 在事件循环中执行异步操作
-                async def call_tool():
-                    try:
-                        if not mcp_client.session:
-                            return self._send_response(500, {
-                                "success": False,
-                                "error": "MCP客户端未连接"
-                            })
-                        
-                        result = await mcp_client.session.call_tool(tool_name, tool_args)
-                        self._send_response(200, {
-                            "success": True,
-                            "data": result.content
-                        })
-                    except Exception as e:
-                        self._send_response(500, {
-                            "success": False,
-                            "error": str(e)
-                        })
-
-                asyncio.run_coroutine_threadsafe(call_tool(), mcp_client._loop)
-            except json.JSONDecodeError:
-                self._send_response(400, {
+                future.result(timeout=10)  # 设置超时时间为10秒
+            except Exception as e:
+                print(f"执行异步操作失败: {str(e)}")
+                self._send_response(500, {
                     "success": False,
-                    "error": "无效的JSON数据"
+                    "error": "执行异步操作失败"
                 })
         else:
             self._send_response(404, {
                 "success": False,
                 "error": "未找到该端点"
             })
+
+    async def handle_tool_call(self, tool_name: str, tool_args: dict):
+        try:
+            print(f"正在调用工具: {tool_name}，参数: {tool_args}")
+            result = await mcp_client.session.call_tool(tool_name, tool_args)
+            print(f"工具调用结果: {result}")
+            
+            # 将 TextContent 对象转换为可序列化的格式
+            content_list = []
+            for content in result.content:
+                content_dict = {
+                    "type": content.type,
+                    "text": content.text,
+                    "annotations": content.annotations
+                }
+                content_list.append(content_dict)
+            
+            return {
+                "success": not result.isError,
+                "data": content_list,
+                "meta": result.meta
+            }
+        except Exception as e:
+            print(f"工具调用失败: {str(e)}")
+            import traceback
+            print(traceback.format_exc())
+            return {"success": False, "error": str(e)}
+
+    def do_POST(self):
+        try:
+            if self.path == "/tool/call":
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                request_data = json.loads(post_data.decode('utf-8'))
+                
+                print(f"收到POST请求数据: {request_data}")  # 添加日志
+                
+                tool_name = request_data.get('tool_name')
+                tool_args = request_data.get('tool_args', {})
+                
+                if not tool_name:
+                    self.send_error(400, "Missing tool_name")
+                    return
+                
+                result = asyncio.run_coroutine_threadsafe(
+                    self.handle_tool_call(tool_name, tool_args),
+                    mcp_client._loop
+                ).result()
+                
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(result).encode())
+            else:
+                self.send_error(404)
+        except Exception as e:
+            print(f"请求处理失败: {str(e)}")  # 添加错误日志
+            import traceback
+            print(traceback.format_exc())  # 添加详细的错误堆栈
+            self.send_error(500)
 
     def do_OPTIONS(self):
         """处理OPTIONS预检请求"""
@@ -209,39 +233,36 @@ class MCPRequestHandler(BaseHTTPRequestHandler):
 
 async def init_mcp_client(server_script_path: str):
     """初始化MCP客户端"""
-    await mcp_client.connect_to_server(server_script_path)
-    
+    print(f"正在连接到MCP服务器脚本: {server_script_path}")  # 添加日志
+    try:
+        await mcp_client.connect_to_server(server_script_path)
+    except Exception as e:
+        print(f"连接MCP服务器失败: {str(e)}")  # 添加错误日志
+        raise
+
 def run_server(host: str = "localhost", port: int = 8000, server_script_path: str = "path/to/your/server.py"):
-    """
-    启动MCP Web服务器
+    print(f"正在初始化MCP Web服务器...")  # 添加日志
     
-    Args:
-        host (str): 服务器主机地址
-        port (int): 服务器端口
-        server_script_path (str): MCP服务器脚本路径
+    # 验证服务器脚本路径
+    if not os.path.exists(server_script_path):  # 需要在文件顶部添加 import os
+        print(f"错误: 找不到服务器脚本: {server_script_path}")
+        return
         
-    功能流程:
-    1. 初始化异步事件循环
-    2. 建立MCP服务器连接
-    3. 启动HTTP服务器
-    4. 管理服务器生命周期
-    
-    注意:
-        使用多线程处理异步事件循环和HTTP服务器
-    """
     # 创建新的事件循环
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     mcp_client._loop = loop
     
-    # 初始化MCP客户端
-    loop.run_until_complete(init_mcp_client(server_script_path))
-    
-    # 启动HTTP服务器
-    server = HTTPServer((host, port), MCPRequestHandler)
-    print(f"服务器启动在 http://{host}:{port}")
-    
     try:
+        # 初始化MCP客户端
+        print("正在初始化MCP客户端...")  # 添加日志
+        loop.run_until_complete(init_mcp_client(server_script_path))
+        
+        # 启动HTTP服务器
+        server = HTTPServer((host, port), MCPRequestHandler)
+        print(f"HTTP服务器已启动在 http://{host}:{port}")  # 修改日志信息
+        print("按Ctrl+C停止服务器")  # 添加提示信息
+        
         # 在单独的线程中运行事件循环
         def run_loop():
             loop.run_forever()
@@ -251,6 +272,8 @@ def run_server(host: str = "localhost", port: int = 8000, server_script_path: st
         
         # 在主线程中运行HTTP服务器
         server.serve_forever()
+    except Exception as e:
+        print(f"服务器启动失败: {str(e)}")  # 添加错误日志
     except KeyboardInterrupt:
         print("\n正在关闭服务器...")
     finally:
@@ -261,7 +284,8 @@ def run_server(host: str = "localhost", port: int = 8000, server_script_path: st
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
-        print("Usage: python script.py <path_to_server_script>")
+        print("用法: python mcp_web_server.py <MCP服务器脚本路径>")
+        print("示例: python mcp_web_server.py ./mcp_server.py")
         sys.exit(1)
     
     run_server(server_script_path=sys.argv[1])
