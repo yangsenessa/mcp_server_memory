@@ -69,33 +69,29 @@ def main(port: int, transport: str) -> int:
         print(f"""
 curl示例:
 1. 获取可用工具列表:
-   curl -N http://localhost:{port}/messages/ -H 'Request-Type: list_tools' \\
-   -H 'Session-Id: test-session'
+   curl -N "http://localhost:{port}/messages/?session_id=test-session" -H 'Request-Type: list_tools'
 
 2. 获取网页内容:
-   curl -N http://localhost:{port}/messages/ -H 'Request-Type: call_tool' \\
+   curl -N "http://localhost:{port}/messages/?session_id=test-session" -H 'Request-Type: call_tool' \\
    -H 'Content-Type: application/json' \\
-   -H 'Session-Id: test-session' \\
    -d '{{"name": "fetch", "arguments": {{"url": "https://example.com"}}}}'
 
 JavaScript fetch示例:
 1. 获取可用工具列表:
-   fetch('http://localhost:{port}/messages/', {{
+   fetch('http://localhost:{port}/messages/?session_id=test-session', {{
        method: 'GET',
        headers: {{
-           'Request-Type': 'list_tools',
-           'Session-Id': 'test-session'
+           'Request-Type': 'list_tools'
        }}
    }}).then(response => response.json())
      .then(data => console.log(data));
 
 2. 获取网页内容:
-   fetch('http://localhost:{port}/messages/', {{
+   fetch('http://localhost:{port}/messages/?session_id=test-session', {{
        method: 'POST',
        headers: {{
            'Request-Type': 'call_tool',
-           'Content-Type': 'application/json',
-           'Session-Id': 'test-session'
+           'Content-Type': 'application/json'
        }},
        body: JSON.stringify({{
            name: 'fetch',
