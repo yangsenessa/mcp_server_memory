@@ -65,7 +65,7 @@ def main(port: int, transport: str) -> int:
         sse = SseServerTransport("/messages/")
         
         print("服务器已启动（SSE模式）")
-        print("使用以下curl命令进行测试：")
+        print("使用以下命令进行测试：")
         print(f"""
 curl示例:
 1. 获取可用工具列表:
@@ -75,6 +75,32 @@ curl示例:
    curl -N http://localhost:{port}/messages/ -H 'Request-Type: call_tool' \\
    -H 'Content-Type: application/json' \\
    -d '{{"name": "fetch", "arguments": {{"url": "https://example.com"}}}}'
+
+JavaScript fetch示例:
+1. 获取可用工具列表:
+   fetch('http://localhost:{port}/messages/', {{
+       method: 'GET',
+       headers: {{
+           'Request-Type': 'list_tools'
+       }}
+   }}).then(response => response.json())
+     .then(data => console.log(data));
+
+2. 获取网页内容:
+   fetch('http://localhost:{port}/messages/', {{
+       method: 'POST',
+       headers: {{
+           'Request-Type': 'call_tool',
+           'Content-Type': 'application/json'
+       }},
+       body: JSON.stringify({{
+           name: 'fetch',
+           arguments: {{
+               url: 'https://example.com'
+           }}
+       }})
+   }}).then(response => response.json())
+     .then(data => console.log(data));
         """)
 
         async def handle_sse(request):
