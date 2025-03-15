@@ -45,6 +45,23 @@ def install_requirements(python_path: str):
             "https://pypi.tuna.tsinghua.edu.cn/simple"
         ])
 
+def help():
+    venv_path = ".venv"
+    print("\n环境设置完成！")
+    print("请按照以下步骤操作：")
+    if sys.platform == "win32":
+        print(f"1. 运行: {venv_path}\\Scripts\\activate")
+        print(f"2. 切换Python解释器: {venv_path}\\Scripts\\python.exe")
+    else:
+        print(f"1. 运行: source {venv_path}/bin/activate")
+        print(f"2. 切换Python解释器: {venv_path}/bin/python")
+    print("\n您也可以直接使用完整路径来运行Python:")
+    if sys.platform == "win32":
+        print(f"    {venv_path}\\Scripts\\python.exe your_script.py")
+    else:
+        print(f"    {venv_path}/bin/python your_script.py")
+    print("\n提示：退出虚拟环境请运行 'deactivate' 命令")
+
 def main():
     """
     主函数：创建虚拟环境并安装依赖
@@ -66,7 +83,7 @@ def main():
             shutil.rmtree(venv_path)
         else:
             print("使用现有虚拟环境...")
-            return
+            return help()
 
     # 创建虚拟环境
     create_venv(venv_path)
@@ -77,12 +94,8 @@ def main():
     # 安装依赖包
     install_requirements(python_path)
     
-    print("\n环境设置完成！")
-    print(f"要激活虚拟环境，请运行：")
-    if sys.platform == "win32":
-        print(f"    {venv_path}\\Scripts\\activate")
-    else:
-        print(f"    source {venv_path}/bin/activate")
+    help()
+    
 
 if __name__ == "__main__":
     main() 
