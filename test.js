@@ -1,9 +1,9 @@
 // 工具函数：处理 SSE 连接
-async function connectSSE(port) {
+async function connectSSE (port) {
   const url = `http://localhost:${port}/sse`
   console.log(`连接到 SSE 服务器: ${url}`)
 
-  let sessionId = null 
+  let sessionId = null
   let initialized = false
   let toolsRequested = false
 
@@ -16,17 +16,17 @@ async function connectSSE(port) {
     }
 
     // 连接错误处理
-    eventSource.onerror = (error) => {
+    eventSource.onerror = error => {
       console.error('SSE 连接错误:', error)
       eventSource.close()
       reject(error)
     }
 
     // 处理 endpoint 事件
-    eventSource.addEventListener('endpoint', async (event) => {
+    eventSource.addEventListener('endpoint', async event => {
       console.log(`收到事件类型 event: endpoint`)
       console.log(`事件数据: ${event.data}`)
-      
+
       const sessionUri = event.data
       const sessionIdMatch = sessionUri.match(/session_id=([^&]+)/)
       if (sessionIdMatch) {
@@ -49,10 +49,10 @@ async function connectSSE(port) {
     })
 
     // 处理 message 事件
-    eventSource.addEventListener('message', async (event) => {
+    eventSource.addEventListener('message', async event => {
       console.log(`收到事件类型 event: message`)
       console.log(`事件数据: ${event.data}`)
-      
+
       try {
         const message = JSON.parse(event.data)
         console.log('收到服务器消息:', message)
@@ -68,7 +68,21 @@ async function connectSSE(port) {
           console.log('初始化完成，现在可以发送其他请求')
 
           // 发送 initialized 通知
-          toolsRequested = await handleInitialized(port, sessionId, toolsRequested)
+          toolsRequested = await handleInitialized(
+            port,
+            sessionId,
+            toolsRequested
+          )
+        }
+
+        if (message.jsonrpc === '2.0' && message.result?.serverInfo) {
+          const { name, version } = message.result.serverInfo
+          console.log(`##服务器信息: ${name} ${version}`)
+        }
+
+        if (message.jsonrpc === '2.0' && message.result?.tools) {
+          const tools = message.result.tools
+          console.log('##可用工具:', tools)
         }
       } catch (error) {
         console.error('解析消息失败:', error)
@@ -81,15 +95,15 @@ async function connectSSE(port) {
 }
 
 // 通用的 JSON-RPC 请求函数
-async function sendJsonRpcRequest(port, sessionId, method, params, id = null) {
+async function sendJsonRpcRequest (port, sessionId, method, params, id = null) {
   console.log(`发送 ${method} 请求，会话 ${sessionId}`)
-  
+
   const jsonRpcRequest = {
     jsonrpc: '2.0',
     method: method,
     params: params || {}
   }
-  
+
   // 只有非通知类请求才需要 id
   if (id !== null) {
     jsonRpcRequest.id = id
@@ -105,7 +119,9 @@ async function sendJsonRpcRequest(port, sessionId, method, params, id = null) {
   })
 
   if (!response.ok) {
-    throw new Error(`${method} 请求失败: ${response.status} ${response.statusText}`)
+    throw new Error(
+      `${method} 请求失败: ${response.status} ${response.statusText}`
+    )
   }
 
   console.log(`${method} 请求已发送，状态:`, response.status)
@@ -122,39 +138,57 @@ async function sendJsonRpcRequest(port, sessionId, method, params, id = null) {
 }
 
 // 初始化会话 - 使用通用请求函数
-async function initializeSession(port, sessionId) {
-  return sendJsonRpcRequest(port, sessionId, 'initialize', {
-    protocolVersion: '0.1.0',
-    capabilities: {},
-    clientInfo: {
-      name: 'JavaScript MCP Client',
-      version: '1.0.0'
-    }
-  }, 1)
+async function initializeSession (port, sessionId) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'initialize',
+    {
+      protocolVersion: '0.1.0',
+      capabilities: {},
+      clientInfo: {
+        name: 'JavaScript MCP Client',
+        version: '1.0.0'
+      }
+    },
+    1
+  )
 }
 
 // 发送 initialized 通知 - 使用通用请求函数
-async function sendInitializedNotification(port, sessionId) {
-  return sendJsonRpcRequest(port, sessionId, 'notifications/initialized', {}, null)
+async function sendInitializedNotification (port, sessionId) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'notifications/initialized',
+    {},
+    null
+  )
 }
 
 // 获取工具列表 - 使用通用请求函数
-async function getToolsList(port, sessionId) {
+async function getToolsList (port, sessionId) {
   return sendJsonRpcRequest(port, sessionId, 'tools/list', {}, 2)
 }
 
 // 调用 fetch 工具 - 使用通用请求函数
-async function callFetchTool(port, sessionId, url) {
-  return sendJsonRpcRequest(port, sessionId, 'call_tool', {
-    name: 'fetch',
-    arguments: {
-      url: url
-    }
-  }, 3)
+async function callFetchTool (port, sessionId, url) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'call_tool',
+    {
+      name: 'fetch',
+      arguments: {
+        url: url
+      }
+    },
+    3
+  )
 }
 
 // 处理初始化完成后的操作
-async function handleInitialized(port, sessionId, toolsRequested) {
+async function handleInitialized (port, sessionId, toolsRequested) {
   try {
     await sendInitializedNotification(port, sessionId)
     console.log('initialized 通知已发送')
