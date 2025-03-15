@@ -4,6 +4,7 @@ async function connectSSE(port) {
   console.log(`连接到 SSE 服务器: ${url}`)
 
   let sessionId = null 
+  let initialized = false
   let toolsRequested = false
 
   return new Promise((resolve, reject) => {
@@ -32,17 +33,17 @@ async function connectSSE(port) {
         sessionId = sessionIdMatch[1]
         console.log(`获取到会话 ID: ${sessionId}`)
 
-        // 获取到 sessionId 后，发送初始化请求
-        try {
-          const initResponse = await initializeSession(port, sessionId)
-          console.log('初始化响应完成，状态:', initResponse.status)
-
-          // 发送 initialized 通知
-          toolsRequested = await handleInitialized(port, sessionId, toolsRequested)
-        } catch (error) {
-          console.error('初始化会话失败:', error)
-          eventSource.close()
-          reject(error)
+        // 获取到 sessionId 后，发送初始化请求（仅当未初始化时）
+        if (!initialized) {
+          try {
+            const initResponse = await initializeSession(port, sessionId)
+            console.log('初始化响应完成，状态:', initResponse.status)
+            // 不在这里设置 initialized，而是等待 message 事件确认
+          } catch (error) {
+            console.error('初始化会话失败:', error)
+            eventSource.close()
+            reject(error)
+          }
         }
       }
     })
@@ -60,7 +61,8 @@ async function connectSSE(port) {
         if (
           message.jsonrpc === '2.0' &&
           message.id === 1 &&
-          message.result
+          message.result &&
+          !initialized
         ) {
           initialized = true
           console.log('初始化完成，现在可以发送其他请求')
@@ -78,53 +80,81 @@ async function connectSSE(port) {
   })
 }
 
-// 初始化会话
-async function initializeSession (port, sessionId) {
-  console.log(`初始化会话 ${sessionId}`)
+// 通用的 JSON-RPC 请求函数
+async function sendJsonRpcRequest(port, sessionId, method, params, id = null) {
+  console.log(`发送 ${method} 请求，会话 ${sessionId}`)
+  
   const jsonRpcRequest = {
     jsonrpc: '2.0',
-    method: 'initialize',
-    id: 1,
-    params: {
-      protocolVersion: '0.1.0',
-      capabilities: {},
-      clientInfo: {
-        name: 'JavaScript MCP Client',
-        version: '1.0.0'
-      }
-    }
+    method: method,
+    params: params || {}
+  }
+  
+  // 只有非通知类请求才需要 id
+  if (id !== null) {
+    jsonRpcRequest.id = id
   }
 
-  const response = await fetch(
-    `http://localhost:${port}/messages/?session_id=${sessionId}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonRpcRequest)
-    }
-  )
+  const url = `http://localhost:${port}/messages/?session_id=${sessionId}`
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonRpcRequest)
+  })
 
   if (!response.ok) {
-    throw new Error(`初始化会话失败: ${response.status} ${response.statusText}`)
+    throw new Error(`${method} 请求失败: ${response.status} ${response.statusText}`)
   }
 
-  console.log('初始化请求已发送，状态:', response.status)
+  console.log(`${method} 请求已发送，状态:`, response.status)
 
-  // 读取响应内容并等待响应完成
+  // 读取响应内容
   const responseText = await response.text()
-  console.log('初始化响应内容:', responseText)
+  console.log(`${method} 响应内容:`, responseText)
 
   // 添加额外延迟，确保连接完全关闭
   await new Promise(resolve => setTimeout(resolve, 3000))
-  console.log('初始化请求已完成并断开连接')
+  console.log(`${method} 请求已完成并断开连接`)
 
   return { status: response.status, data: responseText }
 }
 
+// 初始化会话 - 使用通用请求函数
+async function initializeSession(port, sessionId) {
+  return sendJsonRpcRequest(port, sessionId, 'initialize', {
+    protocolVersion: '0.1.0',
+    capabilities: {},
+    clientInfo: {
+      name: 'JavaScript MCP Client',
+      version: '1.0.0'
+    }
+  }, 1)
+}
+
+// 发送 initialized 通知 - 使用通用请求函数
+async function sendInitializedNotification(port, sessionId) {
+  return sendJsonRpcRequest(port, sessionId, 'notifications/initialized', {}, null)
+}
+
+// 获取工具列表 - 使用通用请求函数
+async function getToolsList(port, sessionId) {
+  return sendJsonRpcRequest(port, sessionId, 'tools/list', {}, 2)
+}
+
+// 调用 fetch 工具 - 使用通用请求函数
+async function callFetchTool(port, sessionId, url) {
+  return sendJsonRpcRequest(port, sessionId, 'call_tool', {
+    name: 'fetch',
+    arguments: {
+      url: url
+    }
+  }, 3)
+}
+
 // 处理初始化完成后的操作
-async function handleInitialized (port, sessionId, toolsRequested) {
+async function handleInitialized(port, sessionId, toolsRequested) {
   try {
     await sendInitializedNotification(port, sessionId)
     console.log('initialized 通知已发送')
@@ -145,121 +175,6 @@ async function handleInitialized (port, sessionId, toolsRequested) {
     console.error('发送 initialized 通知失败:', error)
   }
   return toolsRequested
-}
-
-// 发送 initialized 通知
-async function sendInitializedNotification (port, sessionId) {
-  console.log(`发送 initialized 通知，会话 ${sessionId}`)
-  const jsonRpcRequest = {
-    jsonrpc: '2.0',
-    method: 'notifications/initialized',
-    // 注意：通知没有 id 字段
-    params: {}
-  }
-
-  const response = await fetch(
-    `http://localhost:${port}/messages/?session_id=${sessionId}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonRpcRequest)
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error(
-      `发送 initialized 通知失败: ${response.status} ${response.statusText}`
-    )
-  }
-
-  console.log('initialized 通知已发送，状态:', response.status)
-
-  // 读取响应内容并等待响应完成
-  const responseText = await response.text()
-  console.log('initialized 响应内容:', responseText)
-
-  // 添加额外延迟，确保连接完全关闭
-  await new Promise(resolve => setTimeout(resolve, 3000))
-  console.log('initialized 通知已完成并断开连接')
-
-  return { status: response.status, data: responseText }
-}
-
-// 获取工具列表
-async function getToolsList (port, sessionId) {
-  console.log(`获取工具列表，会话 ${sessionId}`)
-  const jsonRpcRequest = {
-    jsonrpc: '2.0',
-    method: 'tools/list',
-    id: 2,
-    params: {}
-  }
-
-  const response = await fetch(
-    `http://localhost:${port}/messages/?session_id=${sessionId}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonRpcRequest)
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error(
-      `获取工具列表失败: ${response.status} ${response.statusText}`
-    )
-  }
-
-  console.log('工具列表请求已发送，状态:', response.status)
-
-  return { status: response.status }
-}
-
-// 调用 fetch 工具
-async function callFetchTool (port, sessionId, url) {
-  console.log(`调用 fetch 工具，URL: ${url}`)
-  const jsonRpcRequest = {
-    jsonrpc: '2.0',
-    method: 'call_tool',
-    id: 3,
-    params: {
-      name: 'fetch',
-      arguments: {
-        url: url
-      }
-    }
-  }
-
-  const response = await fetch(
-    `http://localhost:${port}/messages/?session_id=${sessionId}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonRpcRequest)
-    }
-  )
-
-  if (!response.ok) {
-    throw new Error(`调用工具失败: ${response.status} ${response.statusText}`)
-  }
-
-  console.log('工具调用请求已发送，状态:', response.status)
-
-  // 读取响应内容并等待响应完成
-  const responseText = await response.text()
-  console.log('工具调用响应内容:', responseText)
-
-  // 添加额外延迟，确保连接完全关闭
-  await new Promise(resolve => setTimeout(resolve, 3000))
-  console.log('工具调用请求已完成并断开连接')
-
-  return { status: response.status, data: responseText }
 }
 
 // 主函数
