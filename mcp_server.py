@@ -66,42 +66,15 @@ def main(port: int, transport: str) -> int:
         
         print("服务器已启动（SSE模式）")
         print("使用以下命令进行测试：")
-        print(f"""
-curl示例:
-1. 获取可用工具列表:
-   curl -N "http://localhost:{port}/messages/?session_id=test-session" -H 'Request-Type: list_tools'
-
-2. 获取网页内容:
-   curl -N "http://localhost:{port}/messages/?session_id=test-session" -H 'Request-Type: call_tool' \\
-   -H 'Content-Type: application/json' \\
-   -d '{{"name": "fetch", "arguments": {{"url": "https://example.com"}}}}'
-
-JavaScript fetch示例:
-1. 获取可用工具列表:
-   fetch('http://localhost:{port}/messages/?session_id=test-session', {{
-       method: 'GET',
-       headers: {{
-           'Request-Type': 'list_tools'
-       }}
-   }}).then(response => response.json())
-     .then(data => console.log(data));
-
-2. 获取网页内容:
-   fetch('http://localhost:{port}/messages/?session_id=test-session', {{
-       method: 'POST',
-       headers: {{
-           'Request-Type': 'call_tool',
-           'Content-Type': 'application/json'
-       }},
-       body: JSON.stringify({{
-           name: 'fetch',
-           arguments: {{
-               url: 'https://example.com'
-           }}
-       }})
-   }}).then(response => response.json())
-     .then(data => console.log(data));
-        """)
+        print(f"1. 建立 SSE 连接：curl -N http://localhost:{port}/sse")
+        print("2. 获取工具列表：curl -X POST 'http://localhost:{port}/messages/?session_id=<session_id>' \\")
+        print("     -H 'Content-Type: application/json' \\")
+        print("     -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"list_tools\"}'")
+        print("3. 调用 fetch 工具：curl -X POST 'http://localhost:{port}/messages/?session_id=<session_id>' \\")
+        print("     -H 'Content-Type: application/json' \\")
+        print("     -d '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"call_tool\",\"params\":{\"name\":\"fetch\",\"arguments\":{\"url\":\"https://example.com\"}}}'")
+        print("注意：<session_id> 需要替换为第一步 SSE 连接返回的 session_id")
+   
 
         async def handle_sse(request):
             async with sse.connect_sse(
