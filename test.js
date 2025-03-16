@@ -84,6 +84,13 @@ async function connectSSE (port) {
           const tools = message.result.tools
           console.log('##可用工具:', tools)
         }
+
+        if (message.jsonrpc === '2.0' && message.result?.content) {
+          const content = message.result.content
+          const isError = message.result.isError;
+          console.log('##结果:', content, isError)
+        }
+
       } catch (error) {
         console.error('解析消息失败:', error)
       }
