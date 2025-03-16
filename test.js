@@ -176,7 +176,7 @@ async function callFetchTool (port, sessionId, url) {
   return sendJsonRpcRequest(
     port,
     sessionId,
-    'call_tool',
+    'tools/call',
     {
       name: 'fetch',
       arguments: {
