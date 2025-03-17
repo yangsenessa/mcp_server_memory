@@ -1,6 +1,6 @@
 // 工具函数：处理 SSE 连接
 async function connectSSE (port) {
-  const url = `http://localhost:${port}/sse`
+  const url = `http://localhost:${port}`
   console.log(`连接到 SSE 服务器: ${url}`)
 
   let sessionId = null
@@ -29,6 +29,7 @@ async function connectSSE (port) {
 
       const sessionUri = event.data
       const sessionIdMatch = sessionUri.match(/session_id=([^&]+)/)
+      //可能为session_id，也可能为sessionId
       if (sessionIdMatch) {
         sessionId = sessionIdMatch[1]
         console.log(`获取到会话 ID: ${sessionId}`)
@@ -87,10 +88,9 @@ async function connectSSE (port) {
 
         if (message.jsonrpc === '2.0' && message.result?.content) {
           const content = message.result.content
-          const isError = message.result.isError;
+          const isError = message.result.isError
           console.log('##结果:', content, isError)
         }
-
       } catch (error) {
         console.error('解析消息失败:', error)
       }

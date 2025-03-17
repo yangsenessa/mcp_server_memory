@@ -66,7 +66,7 @@ def main(port: int, transport: str) -> int:
         
         print("服务器已启动（SSE模式）")
         print("使用以下命令进行测试：")
-        print(f"1. 建立 SSE 连接：curl -N http://localhost:{port}/sse")
+        print(f"1. 建立 SSE 连接：curl -N http://localhost:{port}")
         print(f"2. 初始化会话：curl -X POST 'http://localhost:{port}/messages/?session_id=<session_id>' \\")
         print("     -H 'Content-Type: application/json' \\")
         print("     -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"0.1.0\",\"capabilities\":{},\"clientInfo\":{\"name\":\"Curl Client\",\"version\":\"1.0.0\"}}}'")
@@ -93,7 +93,7 @@ def main(port: int, transport: str) -> int:
         starlette_app = Starlette(
             debug=True,
             routes=[
-                Route("/sse", endpoint=handle_sse),
+                Route("/", endpoint=handle_sse),
                 Mount("/messages/", app=sse.handle_post_message),
             ],
         )
