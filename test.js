@@ -173,6 +173,30 @@ async function sendInitializedNotification (port, sessionId) {
   )
 }
 
+// 获取resources - 使用通用请求函数
+async function getResources (port, sessionId) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'resources/list',
+    {},
+    'getResources'
+  )
+}
+
+// 读取特定资源 - 使用通用请求函数
+async function readResource (port, sessionId, uri) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'resources/read',
+    {
+      uri
+    },
+    'readResource'
+  )
+}
+
 // 获取工具列表 - 使用通用请求函数
 async function getToolsList (port, sessionId) {
   return sendJsonRpcRequest(port, sessionId, 'tools/list', {}, 2)
@@ -194,6 +218,31 @@ async function callFetchTool (port, sessionId, url) {
   )
 }
 
+// 获取prompts列表 - 使用通用请求函数
+async function getPromptsList (port, sessionId) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'prompts/list',
+    {},
+    'getPromptsList'
+  )
+}
+
+// 获取特定prompt - 使用通用请求函数
+async function getPrompt (port, sessionId, name, arguments) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'prompts/get',
+    {
+      name,
+      arguments: arguments || {}
+    },
+    'getPrompt'
+  )
+}
+
 // 处理初始化完成后的操作
 async function handleInitialized (port, sessionId, toolsRequested) {
   try {
@@ -208,6 +257,10 @@ async function handleInitialized (port, sessionId, toolsRequested) {
         await new Promise(resolve => setTimeout(resolve, 500))
         const toolsResponse = await getToolsList(port, sessionId)
         console.log('工具列表响应状态:', toolsResponse.status)
+
+        // 可以在这里添加对prompts/list的调用
+        // const promptsListResponse = await getPromptsList(port, sessionId);
+        // console.log('提示列表响应状态:', promptsListResponse.status);
       } catch (error) {
         console.error('获取工具列表失败:', error)
       }
