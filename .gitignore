@@ -1,3 +1,7 @@
 /.venv
 sqlite.db
 memory.json
+/build
+/dist
+*.spec
+/venv_mcp_server_memory

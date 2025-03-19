@@ -1,0 +1,17 @@
+{
+    "main_file": "mcp_server_memory.py",
+    "packages": [
+        "pyinstaller",
+        "openai",
+        "mcp",
+        "starlette",
+        "uvicorn",
+        "dataclasses"
+    ],
+    "pyinstaller_args": [
+        "--onefile",
+        "--hidden-import=mcp.server",
+        "--hidden-import=mcp.server.sse",
+        "--hidden-import=mcp.types"
+    ]
+}

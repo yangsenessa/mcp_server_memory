@@ -1,29 +1,24 @@
 import os
 import sys
 import json
-import logging
 from pathlib import Path
-from typing import Any, List, Dict, Optional
 from dataclasses import dataclass
-from contextlib import asynccontextmanager
 
-from mcp.server import Server, NotificationOptions
+from mcp.server import Server 
 from mcp.server.sse import SseServerTransport
 import mcp.types as types
 from starlette.applications import Starlette
-from starlette.routing import Mount, Route
-from pydantic import AnyUrl
+from starlette.routing import Mount, Route 
 
-# 配置日志
-logger = logging.getLogger('mcp_memory_server')
-logger.info("Starting MCP Memory Server")
+
+print("Starting MCP Memory Server")
 
 # 定义数据结构
 @dataclass
 class Entity:
     name: str
     entityType: str
-    observations: List[str]
+    observations: list
 
 @dataclass
 class Relation:
@@ -33,8 +28,8 @@ class Relation:
 
 @dataclass
 class KnowledgeGraph:
-    entities: List[Entity]
-    relations: List[Relation]
+    entities: list
+    relations: list
 
 class KnowledgeGraphManager:
     def __init__(self, memory_path: str):
@@ -70,7 +65,7 @@ class KnowledgeGraphManager:
             return graph
             
         except Exception as e:
-            logger.error(f"Error loading graph: {e}")
+            print(f"Error loading graph: {e}")
             return KnowledgeGraph(entities=[], relations=[])
 
     async def save_graph(self, graph: KnowledgeGraph):
@@ -82,7 +77,7 @@ class KnowledgeGraphManager:
                     "name": entity.name,
                     "entityType": entity.entityType,
                     "observations": entity.observations
-                }))
+                }, ensure_ascii=False))
                 
             for relation in graph.relations:
                 lines.append(json.dumps({
@@ -90,12 +85,12 @@ class KnowledgeGraphManager:
                     "from": relation.from_,
                     "to": relation.to,
                     "relationType": relation.relationType
-                }))
+                }, ensure_ascii=False))
                 
             await self._write_file("\n".join(lines))
             
         except Exception as e:
-            logger.error(f"Error saving graph: {e}")
+            print(f"Error saving graph: {e}")
             raise
 
     async def _read_file(self) -> str:
@@ -103,10 +98,10 @@ class KnowledgeGraphManager:
             return f.read()
 
     async def _write_file(self, content: str):
-        with open(self.memory_path, "w", encoding="utf-8") as f:
+        with open(self.memory_path, "w", encoding="utf-8", newline="\n") as f:
             f.write(content)
 
-    async def create_entities(self, entities: List[Entity]) -> List[Entity]:
+    async def create_entities(self, entities: list) -> list:
         graph = await self.load_graph()
         new_entities = [e for e in entities 
                        if not any(ex.name == e.name for ex in graph.entities)]
@@ -114,7 +109,7 @@ class KnowledgeGraphManager:
         await self.save_graph(graph)
         return new_entities
 
-    async def create_relations(self, relations: List[Relation]) -> List[Relation]:
+    async def create_relations(self, relations: list) -> list:
         graph = await self.load_graph()
         new_relations = [r for r in relations 
                         if not any(ex.from_ == r.from_ and 
@@ -125,7 +120,7 @@ class KnowledgeGraphManager:
         await self.save_graph(graph)
         return new_relations
 
-    async def add_observations(self, observations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    async def add_observations(self, observations: list) -> list:
         graph = await self.load_graph()
         results = []
         
@@ -146,7 +141,7 @@ class KnowledgeGraphManager:
         await self.save_graph(graph)
         return results
 
-    async def delete_entities(self, entity_names: List[str]) -> None:
+    async def delete_entities(self, entity_names: list) -> None:
         graph = await self.load_graph()
         graph.entities = [e for e in graph.entities 
                          if e.name not in entity_names]
@@ -155,7 +150,7 @@ class KnowledgeGraphManager:
                          r.to not in entity_names]
         await self.save_graph(graph)
 
-    async def delete_observations(self, deletions: List[Dict[str, Any]]) -> None:
+    async def delete_observations(self, deletions: list) -> None:
         graph = await self.load_graph()
         
         for deletion in deletions:
@@ -167,7 +162,7 @@ class KnowledgeGraphManager:
                 
         await self.save_graph(graph)
 
-    async def delete_relations(self, relations: List[Relation]) -> None:
+    async def delete_relations(self, relations: list) -> None:
         graph = await self.load_graph()
         graph.relations = [r for r in graph.relations 
                          if not any(dr.from_ == r.from_ and 
@@ -202,7 +197,7 @@ class KnowledgeGraphManager:
             relations=filtered_relations
         )
 
-    async def open_nodes(self, names: List[str]) -> KnowledgeGraph:
+    async def open_nodes(self, names: list) -> KnowledgeGraph:
         graph = await self.load_graph()
         
         # 过滤实体
@@ -223,13 +218,15 @@ class KnowledgeGraphManager:
         )
 
 async def main(memory_path: str, port: int = 8080):
-    logger.info(f"Starting Memory MCP Server with memory path: {memory_path} on port: {port}")
+    # 转换为绝对路径并显示
+    absolute_memory_path = Path(memory_path).resolve()
+    print(f"Starting Memory MCP Server with memory path: {absolute_memory_path} on port: {port}")
     
-    graph_manager = KnowledgeGraphManager(memory_path)
+    graph_manager = KnowledgeGraphManager(str(absolute_memory_path))
     app = Server("memory-manager")
 
     @app.list_tools()
-    async def handle_list_tools() -> List[types.Tool]:
+    async def handle_list_tools():
         return [
             types.Tool(
                 name="create_entities",
@@ -400,8 +397,8 @@ async def main(memory_path: str, port: int = 8080):
     @app.call_tool()
     async def handle_call_tool(
         name: str, 
-        arguments: Dict[str, Any] | None
-    ) -> List[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+        arguments: dict | None
+    ) -> list:
         try:
             if name == "read_graph":
                 result = await graph_manager.read_graph()
@@ -410,7 +407,7 @@ async def main(memory_path: str, port: int = 8080):
                     text=json.dumps({
                         "entities": [vars(e) for e in result.entities],
                         "relations": [vars(r) for r in result.relations]
-                    }, indent=2)
+                    }, indent=2, ensure_ascii=False)
                 )]
             
             if not arguments:
@@ -421,7 +418,7 @@ async def main(memory_path: str, port: int = 8080):
                 result = await graph_manager.create_entities(entities)
                 return [types.TextContent(
                     type="text",
-                    text=json.dumps([vars(e) for e in result], indent=2)
+                    text=json.dumps([vars(e) for e in result], indent=2, ensure_ascii=False)
                 )]
                 
             elif name == "create_relations":
@@ -429,14 +426,14 @@ async def main(memory_path: str, port: int = 8080):
                 result = await graph_manager.create_relations(relations)
                 return [types.TextContent(
                     type="text",
-                    text=json.dumps([vars(r) for r in result], indent=2)
+                    text=json.dumps([vars(r) for r in result], indent=2, ensure_ascii=False)
                 )]
                 
             elif name == "add_observations":
                 result = await graph_manager.add_observations(arguments["observations"])
                 return [types.TextContent(
                     type="text",
-                    text=json.dumps(result, indent=2)
+                    text=json.dumps(result, indent=2, ensure_ascii=False)
                 )]
                 
             elif name == "delete_entities":
@@ -468,7 +465,7 @@ async def main(memory_path: str, port: int = 8080):
                     text=json.dumps({
                         "entities": [vars(e) for e in result.entities],
                         "relations": [vars(r) for r in result.relations]
-                    }, indent=2)
+                    }, indent=2, ensure_ascii=False)
                 )]
                 
             elif name == "open_nodes":
@@ -478,14 +475,14 @@ async def main(memory_path: str, port: int = 8080):
                     text=json.dumps({
                         "entities": [vars(e) for e in result.entities],
                         "relations": [vars(r) for r in result.relations]
-                    }, indent=2)
+                    }, indent=2, ensure_ascii=False)
                 )]
             
             else:
                 raise ValueError(f"Unknown tool: {name}")
             
         except Exception as e:
-            logger.error(f"Error in tool {name}: {str(e)}")
+            print(f"Error in tool {name}: {str(e)}")
             return [types.TextContent(type="text", text=f"Error: {str(e)}")]
 
     # 设置 SSE 服务器
@@ -513,22 +510,135 @@ async def main(memory_path: str, port: int = 8080):
     server = uvicorn.Server(config)
     await server.serve()
 
+def get_user_input(prompt: str, default: str) -> str:
+    """获取用户输入，如果用户直接回车则使用默认值"""
+    user_input = input(f"{prompt} (默认: {default}): ").strip()
+    return user_input if user_input else default
+
+def get_config_path() -> Path:
+    """获取配置文件路径"""
+    if getattr(sys, 'frozen', False):
+        # 如果是打包后的exe运行
+        return Path(sys.executable).parent / "config.json"
+    else:
+        # 如果是源代码运行
+        return Path(__file__).parent / "config.json"
+
+def load_config() -> dict:
+    """加载配置文件"""
+    config_path = get_config_path()
+    if config_path.exists():
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_config(port: int, memory_path: str):
+    """保存配置到文件"""
+    config_path = get_config_path()
+    config = {
+        'port': port,
+        'memory_path': str(memory_path)
+    }
+    try:
+        with open(config_path, 'w', encoding='utf-8') as f:
+            json.dump(config, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"保存配置文件失败: {e}")
+
 if __name__ == "__main__":
     import asyncio
     import argparse
-    
+    import sys
+    import select
+
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='MCP Memory Server')
-    parser.add_argument('--port', type=int, default=8080, help='服务器端口号')
+    parser.add_argument('--port', type=int, help='服务器端口号')
     parser.add_argument('--memory-path', type=str, help='内存文件路径')
     
     args = parser.parse_args()
     
-    # 获取内存文件路径
-    default_memory_path = Path(__file__).parent / "memory.json"
-    memory_path = args.memory_path or os.getenv("MEMORY_FILE_PATH", default_memory_path)
+    # 修改检查 stdin 的方法
+    if sys.platform == "win32":
+        # Windows 系统使用 msvcrt 模块
+        import msvcrt
+        has_stdin_data = msvcrt.kbhit()
+    else:
+        # Unix 系统使用 select
+        has_stdin_data = select.select([sys.stdin], [], [], 0.0)[0] != []
+
+    # 加载上次的配置
+    last_config = load_config()
     
-    if not Path(memory_path).is_absolute():
-        memory_path = Path(__file__).parent / memory_path
+    if has_stdin_data:
+        # 从 stdin 读取 JSON 配置
+        json_str = sys.stdin.read().strip()
         
-    asyncio.run(main(str(memory_path), args.port))
+        # 检查输入是否为空
+        if not json_str:
+            print("错误：输入为空，请提供有效的JSON配置")
+            sys.exit(1)
+            
+        try:
+            # 首先尝试直接解析
+            stdin_config = json.loads(json_str)
+        except json.JSONDecodeError:
+            try:
+                # 尝试处理UTF-8 BOM
+                stdin_config = json.loads(json_str.encode('utf-8').decode('utf-8-sig'))
+            except:
+                try:
+                    # 尝试修复常见的JSON格式问题
+                    json_str = json_str.replace("'", '"')  # 将单引号替换为双引号
+                    stdin_config = json.loads(json_str)
+                except json.JSONDecodeError:
+                    print("错误：无法解析 stdin 的 JSON 数据")
+                    sys.exit(1)
+                    
+        port = stdin_config.get('port', 8080)
+        memory_path = stdin_config.get('memory_path')
+        
+        if not memory_path:
+            print("错误：未提供 memory_path")
+            sys.exit(1)
+    else:
+        # 获取端口号
+        if args.port is not None:
+            port = args.port
+        else:
+            default_port = str(last_config.get('port', 8080))
+            port = int(get_user_input("请输入服务器端口号", default_port))
+        
+        # 获取内存文件路径
+        if getattr(sys, 'frozen', False):
+            default_memory_path = Path(sys.executable).parent / "memory.json"
+        else:
+            default_memory_path = Path(__file__).parent / "memory.json"
+
+        if args.memory_path:
+            memory_path = args.memory_path
+        else:
+            saved_memory_path = last_config.get('memory_path')
+            default_path = saved_memory_path if saved_memory_path else str(default_memory_path)
+            memory_path = get_user_input("请输入内存文件路径", default_path)
+    
+    # 确保内存文件路径是绝对路径
+    memory_path = Path(memory_path)  # 首先转换为 Path 对象
+    if not memory_path.is_absolute():
+        memory_path = Path(__file__).parent / memory_path
+    
+    # 显示最终的内存文件路径
+    print(f"Memory file will be stored at: {memory_path.resolve()}")
+    print(f"Server will run on port: {port}")
+    
+    # 在 Windows 上运行时需要使用特定的事件循环策略
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    
+    # 保存当前配置
+    save_config(port, str(memory_path))
+    
+    asyncio.run(main(str(memory_path), port))  # 确保传入字符串形式的路径
