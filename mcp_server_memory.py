@@ -11,9 +11,13 @@ from starlette.applications import Starlette
 from starlette.routing import Mount, Route 
 
 
-print("Starting MCP Memory Server")
+print("\033[1;32mStarting MCP Memory Server\033[0m")
+print("\033[1;34mby Mixlab \033]8;;https://github.com/shadowcz007/memory_mcp\033\\GitHub\033]8;;\033\\\033[0m")
+print("\033[1;36mTutorial: \033]8;;https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033\\点击查看教程\033]8;;\033\\\033[0m")
+print()
+print()
 
-# 定义数据结构
+# 定义数据结构 
 @dataclass
 class Entity:
     name: str
@@ -506,7 +510,7 @@ async def main(memory_path: str, port: int = 8080):
 
     # 启动服务器
     import uvicorn
-    config = uvicorn.Config(starlette_app, host="0.0.0.0", port=port)
+    config = uvicorn.Config(starlette_app, host="localhost", port=port)
     server = uvicorn.Server(config)
     await server.serve()
 
@@ -583,20 +587,18 @@ if __name__ == "__main__":
             sys.exit(1)
             
         try:
-            # 首先尝试直接解析
+            # 尝试处理可能包含 BOM 的输入
+            if json_str.startswith('\ufeff'):
+                json_str = json_str[1:]  # 移除 BOM
             stdin_config = json.loads(json_str)
         except json.JSONDecodeError:
             try:
-                # 尝试处理UTF-8 BOM
-                stdin_config = json.loads(json_str.encode('utf-8').decode('utf-8-sig'))
-            except:
-                try:
-                    # 尝试修复常见的JSON格式问题
-                    json_str = json_str.replace("'", '"')  # 将单引号替换为双引号
-                    stdin_config = json.loads(json_str)
-                except json.JSONDecodeError:
-                    print("错误：无法解析 stdin 的 JSON 数据")
-                    sys.exit(1)
+                # 尝试修复常见的JSON格式问题
+                json_str = json_str.replace("'", '"')  # 将单引号替换为双引号
+                stdin_config = json.loads(json_str)
+            except json.JSONDecodeError:
+                print("错误：无法解析 stdin 的 JSON 数据")
+                sys.exit(1)
                     
         port = stdin_config.get('port', 8080)
         memory_path = stdin_config.get('memory_path')
