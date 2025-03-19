@@ -516,8 +516,15 @@ async def main(memory_path: str, port: int = 8080):
 
 def get_user_input(prompt: str, default: str) -> str:
     """获取用户输入，如果用户直接回车则使用默认值"""
-    user_input = input(f"{prompt} (默认: {default}): ").strip()
-    return user_input if user_input else default
+    try:
+        user_input = input(f"{prompt} (默认: {default}): ").strip()
+        # 移除可能存在的 BOM
+        if user_input.startswith('\ufeff'):
+            user_input = user_input[1:]
+        return user_input if user_input else default
+    except Exception as e:
+        print(f"输入处理错误: {e}")
+        return default
 
 def get_config_path() -> Path:
     """获取配置文件路径"""
@@ -565,82 +572,66 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    # 修改检查 stdin 的方法
-    if sys.platform == "win32":
-        # Windows 系统使用 msvcrt 模块
-        import msvcrt
-        has_stdin_data = msvcrt.kbhit()
-    else:
-        # Unix 系统使用 select
-        has_stdin_data = select.select([sys.stdin], [], [], 0.0)[0] != []
-
     # 加载上次的配置
     last_config = load_config()
+    port = None
+    memory_path = None
     
-    if has_stdin_data:
-        # 从 stdin 读取 JSON 配置
-        json_str = sys.stdin.read().strip()
-        
-        # 检查输入是否为空
-        if not json_str:
-            print("错误：输入为空，请提供有效的JSON配置")
-            sys.exit(1)
-            
-        try:
-            # 尝试处理可能包含 BOM 的输入
-            if json_str.startswith('\ufeff'):
-                json_str = json_str[1:]  # 移除 BOM
-            stdin_config = json.loads(json_str)
-        except json.JSONDecodeError:
-            try:
-                # 尝试修复常见的JSON格式问题
-                json_str = json_str.replace("'", '"')  # 将单引号替换为双引号
+    # 1. 首先检查是否有 stdin 输入
+    try:
+        # 检查stdin是否有数据可读
+        if not sys.stdin.isatty():  # 如果stdin不是终端，说明可能有管道输入
+            json_str = sys.stdin.read().strip()
+            if json_str:  # 确保输入不为空
+                if json_str.startswith('\ufeff'):
+                    json_str = json_str[1:]
                 stdin_config = json.loads(json_str)
-            except json.JSONDecodeError:
-                print("错误：无法解析 stdin 的 JSON 数据")
-                sys.exit(1)
-                    
-        port = stdin_config.get('port', 8080)
-        memory_path = stdin_config.get('memory_path')
+                
+                port = stdin_config.get('port')
+                memory_path = stdin_config.get('memory_path')
+                
+                # 如果成功从stdin读取配置，直接使用这些值
+                if port is not None and memory_path is not None:
+                    print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
+    except Exception as e:
+        print(f"处理 stdin 输入时出错: {e}")
+        # 继续执行，尝试其他配置方式
+    
+    # 2. 如果没有 stdin 输入，检查命令行参数
+    if port is None:
+        port = args.port
+    if memory_path is None:
+        memory_path = args.memory_path
         
-        if not memory_path:
-            print("错误：未提供 memory_path")
-            sys.exit(1)
-    else:
-        # 获取端口号
-        if args.port is not None:
-            port = args.port
-        else:
-            default_port = str(last_config.get('port', 8080))
-            port = int(get_user_input("请输入服务器端口号", default_port))
+    # 3. 如果仍然没有配置，使用用户交互输入
+    if port is None:
+        default_port = str(last_config.get('port', 8080))
+        port = int(get_user_input("请输入服务器端口号", default_port))
         
-        # 获取内存文件路径
+    if memory_path is None:
         if getattr(sys, 'frozen', False):
             default_memory_path = Path(sys.executable).parent / "memory.json"
         else:
             default_memory_path = Path(__file__).parent / "memory.json"
+            
+        saved_memory_path = last_config.get('memory_path')
+        default_path = saved_memory_path if saved_memory_path else str(default_memory_path)
+        memory_path = get_user_input("请输入内存文件路径", default_path)
 
-        if args.memory_path:
-            memory_path = args.memory_path
-        else:
-            saved_memory_path = last_config.get('memory_path')
-            default_path = saved_memory_path if saved_memory_path else str(default_memory_path)
-            memory_path = get_user_input("请输入内存文件路径", default_path)
-    
-    # 确保内存文件路径是绝对路径
-    memory_path = Path(memory_path)  # 首先转换为 Path 对象
+    # 处理内存文件路径
+    memory_path = Path(memory_path)
     if not memory_path.is_absolute():
-        memory_path = Path(__file__).parent / memory_path
+        if getattr(sys, 'frozen', False):
+            memory_path = Path(sys.executable).parent / memory_path
+        else:
+            memory_path = Path(__file__).parent / memory_path
     
-    # 显示最终的内存文件路径
     print(f"Memory file will be stored at: {memory_path.resolve()}")
     print(f"Server will run on port: {port}")
     
-    # 在 Windows 上运行时需要使用特定的事件循环策略
+    # 保存配置并启动服务器
     if sys.platform == "win32":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     
-    # 保存当前配置
     save_config(port, str(memory_path))
-    
-    asyncio.run(main(str(memory_path), port))  # 确保传入字符串形式的路径
+    asyncio.run(main(str(memory_path), port))
