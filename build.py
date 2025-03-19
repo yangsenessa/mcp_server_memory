@@ -4,6 +4,13 @@ import subprocess
 import platform
 import json
 
+def check_python_version():
+    # 检查Python版本
+    if sys.version_info < (3, 10):
+        print("错误：此程序需要Python 3.10或更高版本")
+        print(f"当前Python版本: {sys.version_info.major}.{sys.version_info.minor}")
+        sys.exit(1)
+
 def parse_input():
     # 从标准输入读取JSON字符串
     print("请输入JSON配置字符串:")
@@ -115,5 +122,6 @@ def create_venv(args):
         print(f"无法导入模块，请确保它已正确安装: {e}")
 
 if __name__ == '__main__':
+    check_python_version()  # 添加版本检查
     args = parse_input()
     create_venv(args)

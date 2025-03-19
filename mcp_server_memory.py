@@ -11,9 +11,14 @@ from starlette.applications import Starlette
 from starlette.routing import Mount, Route 
 
 
-print("\033[1;32mStarting MCP Memory Server\033[0m")
-print("\033[1;34mby Mixlab \033]8;;https://github.com/shadowcz007/memory_mcp\033\\GitHub\033]8;;\033\\\033[0m")
-print("\033[1;36mTutorial: \033]8;;https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033\\点击查看教程\033]8;;\033\\\033[0m")
+if sys.platform == "darwin":  # Mac OS
+    print("\033[1;32mStarting MCP Memory Server\033[0m")
+    print("\033[1;34mby Mixlab - GitHub: https://github.com/shadowcz007/memory_mcp\033[0m")
+    print("\033[1;36mTutorial: https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033[0m")
+else:  # Windows 和其他平台
+    print("\033[1;32mStarting MCP Memory Server\033[0m")
+    print("\033[1;34mby Mixlab \033]8;;https://github.com/shadowcz007/memory_mcp\033\\GitHub\033]8;;\033\\\033[0m")
+    print("\033[1;36mTutorial: \033]8;;https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033\\点击查看教程\033]8;;\033\\\033[0m")
 print()
 print()
 
