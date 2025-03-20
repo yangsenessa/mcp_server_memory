@@ -11,17 +11,6 @@ from starlette.applications import Starlette
 from starlette.routing import Mount, Route 
 
 
-if sys.platform == "darwin":  # Mac OS
-    print("\033[1;32mStarting MCP Memory Server\033[0m")
-    print("\033[1;34mby Mixlab - GitHub: https://github.com/shadowcz007/memory_mcp\033[0m")
-    print("\033[1;36mTutorial: https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033[0m")
-else:  # Windows 和其他平台
-    print("\033[1;32mStarting MCP Memory Server\033[0m")
-    print("\033[1;34mby Mixlab \033]8;;https://github.com/shadowcz007/memory_mcp\033\\GitHub\033]8;;\033\\\033[0m")
-    print("\033[1;36mTutorial: \033]8;;https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033\\点击查看教程\033]8;;\033\\\033[0m")
-print()
-print()
-
 # 定义数据结构 
 @dataclass
 class Entity:
@@ -592,8 +581,48 @@ if __name__ == "__main__":
                     json_str = json_str[1:]
                 stdin_config = json.loads(json_str)
                 
-                port = stdin_config.get('port')
-                memory_path = stdin_config.get('memory_path')
+                # 检查是否是帮助请求
+                if (stdin_config.get("jsonrpc") == "2.0" and 
+                    stdin_config.get("method") == "help" and 
+                    "id" in stdin_config):
+                    
+                    help_response = {
+                        "jsonrpc": "2.0",
+                        "result": {
+                            "type": "mcp",
+                            "description": "此服务是提供memory相关的mcp服务，支持sse调用",
+                            "author": "shadow@Mixlab",
+                            "github": "https://github.com/shadowcz007/memory_mcp",
+                            "methods": [
+                                {
+                                    "name": "help",
+                                    "description": "显示此帮助信息。"
+                                },
+                                {
+                                    "name": "method_name",
+                                    "description": "这是另一个方法，用于执行特定的功能"
+                                },
+                                # 可以继续添加其他的方法信息
+                            ]
+                        },
+                        "id": stdin_config["id"]
+                    }
+                    print(json.dumps(help_response, ensure_ascii=False, indent=2))
+                    sys.exit(0)  # 退出程序，因为已经处理了请求
+
+                # 新增处理 start 方法
+                if (stdin_config.get("jsonrpc") == "2.0" and 
+                    stdin_config.get("method") == "start" and 
+                    "params" in stdin_config):
+                    
+                    params = stdin_config["params"]
+                    port = params.get("port", 8080)
+                    memory_path = params.get("memory_path", "./memory.json")
+                    print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
+                    # sys.exit(0)  # 退出程序，因为已经处理了请求
+
+                # port = stdin_config.get('port')
+                # memory_path = stdin_config.get('memory_path')
                 
                 # 如果成功从stdin读取配置，直接使用这些值
                 if port is not None and memory_path is not None:
@@ -639,4 +668,16 @@ if __name__ == "__main__":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     
     save_config(port, str(memory_path))
+
+    if sys.platform == "darwin":  # Mac OS
+        print("\033[1;32mStarting MCP Memory Server\033[0m")
+        print("\033[1;34mby Mixlab - GitHub: https://github.com/shadowcz007/memory_mcp\033[0m")
+        print("\033[1;36mTutorial: https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033[0m")
+    else:  # Windows 和其他平台
+        print("\033[1;32mStarting MCP Memory Server\033[0m")
+        print("\033[1;34mby Mixlab \033]8;;https://github.com/shadowcz007/memory_mcp\033\\GitHub\033]8;;\033\\\033[0m")
+        print("\033[1;36mTutorial: \033]8;;https://mp.weixin.qq.com/s/kiDlpgWqmo0eDYNd7Extmg\033\\点击查看教程\033]8;;\033\\\033[0m")
+    print()
+    print()
+
     asyncio.run(main(str(memory_path), port))

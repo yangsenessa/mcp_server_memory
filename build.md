@@ -56,6 +56,12 @@ data_paths：要添加的数据文件路径，格式为 源路径:目标路径
 }
 ```
 
+### 帮助信息
+
+```json
+cat help.json | python mcp_server_memory.py
+```
+
 ## 注意事项
 
 - 该工具默认使用清华大学镜像源安装 Python 包
