@@ -625,8 +625,8 @@ if __name__ == "__main__":
                 # memory_path = stdin_config.get('memory_path')
                 
                 # 如果成功从stdin读取配置，直接使用这些值
-                if port is not None and memory_path is not None:
-                    print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
+                # if port is not None and memory_path is not None:
+                #     print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
     except Exception as e:
         print(f"处理 stdin 输入时出错: {e}")
         # 继续执行，尝试其他配置方式
