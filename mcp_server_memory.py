@@ -618,7 +618,7 @@ if __name__ == "__main__":
                     params = stdin_config["params"]
                     port = params.get("port", 8080)
                     memory_path = params.get("memory_path", "./memory.json")
-                    print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
+                    # print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
                     # sys.exit(0)  # 退出程序，因为已经处理了请求
 
                 # port = stdin_config.get('port')
