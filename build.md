@@ -62,6 +62,55 @@ data_paths：要添加的数据文件路径，格式为 源路径:目标路径
 cat help.json | python mcp_server_memory.py
 ```
 
+帮助信息的返回格式要求：
+
+params需要采用JSON Schema格式
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+      "type": "mcp",
+      "description": "此服务是提供memory相关的mcp服",
+      "author": "shadow@Mixlab",
+      "github": "https://github.com/shadowcz007/memory_mcp",
+      "transport": ["stdio", "sse"],
+      "methods": [
+                {
+                  "name": "help",
+                  "description": "显示此帮助信息。"
+                },
+                {
+                  "name": "start",
+                  "description": "启动服务器",
+                  "params": {
+                      "type": "object",
+                      "properties": {
+                          "transport": {
+                              "type": "string",
+                              "enum": ["stdio", "sse"],
+                              "description": "传输类型",
+                              "default": "sse"
+                              },
+                          "port": {
+                              "type": "integer",
+                              "description": "服务器端口号 (仅在 transport=sse 时需要设置)",
+                              "default": 8080
+                              },
+                          "memory_path": {
+                              "type": "string",
+                              "description": "内存文件路径",
+                              "default": "./memory.json"
+                              }
+                      }
+                  }
+               }
+          ]
+      },
+  "id": stdin_config["id"]
+}
+```
+
+
 ## 注意事项
 
 - 该工具默认使用清华大学镜像源安装 Python 包

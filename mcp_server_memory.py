@@ -641,9 +641,25 @@ if __name__ == "__main__":
                                     "name": "start",
                                     "description": "启动服务器",
                                     "params": {
-                                        "transport": "传输类型 (stdio 或 sse, 默认为sse)",
-                                        "port": "服务器端口号 (仅在 transport=sse 时需要设置)",
-                                        "memory_path": "内存文件路径"
+                                        "type": "object",
+                                        "properties": {
+                                            "transport": {
+                                                "type": "string",
+                                                "enum": ["stdio", "sse"],
+                                                "description": "传输类型",
+                                                "default": "sse"
+                                            },
+                                            "port": {
+                                                "type": "integer",
+                                                "description": "服务器端口号 (仅在 transport=sse 时需要设置)",
+                                                "default": 8080
+                                            },
+                                            "memory_path": {
+                                                "type": "string",
+                                                "description": "内存文件路径",
+                                                "default": "./memory.json"
+                                            }
+                                        }
                                     }
                                 }
                             ]
