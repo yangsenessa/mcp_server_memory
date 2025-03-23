@@ -4,8 +4,8 @@ import asyncio
 
 # Create server parameters for stdio connection
 server_params = StdioServerParameters(
-    command="python",  # 可执行文件
-    args=["mcp_server_memory.py", "--transport", "stdio"],  # 确保使用 stdio 传输模式
+    command="dist/mcp_server_memory.exe",  # 可执行文件
+    args=["--transport", "stdio"],  # 确保使用 stdio 传输模式
     env=None,  # 可选环境变量
 )
 
