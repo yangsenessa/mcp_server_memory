@@ -216,13 +216,15 @@ class KnowledgeGraphManager:
             entities=filtered_entities,
             relations=filtered_relations
         )
+    
+def init_server(memory_path):
 
-async def main(memory_path: str, port: int = 8080):
     # 转换为绝对路径并显示
     absolute_memory_path = Path(memory_path).resolve()
-    print(f"Starting Memory MCP Server with memory path: {absolute_memory_path} on port: {port}")
+    # print(f"Starting Memory MCP Server with memory path: {absolute_memory_path}")
     
     graph_manager = KnowledgeGraphManager(str(absolute_memory_path))
+
     app = Server("memory-manager")
 
     @app.list_tools()
@@ -484,7 +486,10 @@ async def main(memory_path: str, port: int = 8080):
         except Exception as e:
             print(f"Error in tool {name}: {str(e)}")
             return [types.TextContent(type="text", text=f"Error: {str(e)}")]
+    return app
 
+async def main_sse(app, port: int = 8080):
+    
     # 设置 SSE 服务器
     sse = SseServerTransport("/messages/")
     
@@ -640,7 +645,7 @@ if __name__ == "__main__":
                                 {
                                     "name": "start",
                                     "description": "启动服务器",
-                                    "params": {
+                                    "inputSchema": {
                                         "type": "object",
                                         "properties": {
                                             "transport": {
@@ -696,16 +701,24 @@ if __name__ == "__main__":
         print(f"处理 stdin 输入时出错: {e}")
         # 继续执行，尝试其他配置方式
     
-    # 2. 如果没有 stdin 输入，检查命令行参数
-    if port is None:
-        port = args.port
+    # 获取 transport 参数
+    transport = args.transport
+    
+    if transport != "stdio":
+        # 如果没有 stdin 输入，检查命令行参数
+        if port is None:
+            port = args.port
+
+        # 如果仍然没有配置，使用用户交互输入
+        if port is None:
+            default_port = str(last_config.get('port', 8080))
+            if default_port == "None":
+                default_port=8080
+                
+            port = int(get_user_input("请输入服务器端口号", default_port))
+
     if memory_path is None:
         memory_path = args.memory_path
-        
-    # 3. 如果仍然没有配置，使用用户交互输入
-    if port is None:
-        default_port = str(last_config.get('port', 8080))
-        port = int(get_user_input("请输入服务器端口号", default_port))
         
     if memory_path is None:
         if getattr(sys, 'frozen', False):
@@ -715,7 +728,11 @@ if __name__ == "__main__":
             
         saved_memory_path = last_config.get('memory_path')
         default_path = saved_memory_path if saved_memory_path else str(default_memory_path)
-        memory_path = get_user_input("请输入内存文件路径", default_path)
+        
+        if transport == "sse":
+            memory_path = get_user_input("请输入内存文件路径", default_path)
+        else:
+            memory_path = default_path
 
     # 处理内存文件路径
     memory_path = Path(memory_path)
@@ -726,10 +743,7 @@ if __name__ == "__main__":
             memory_path = Path(__file__).parent / memory_path
     
     print(f"Memory file will be stored at: {memory_path.resolve()}")
-    print(f"Server will run on port: {port}")
     
-    # 获取 transport 参数
-    transport = args.transport
     
     # 根据 transport 类型处理端口参数
     if transport == "sse":
@@ -739,7 +753,7 @@ if __name__ == "__main__":
             print(f"服务器将在端口 {port} 上运行")
     else:  # stdio 模式
         port = None
-        print("使用 stdio 模式运行，无需设置端口")
+        print("使用 stdio 模式运行")
     
     # 保存配置并启动服务器
     if sys.platform == "win32":
@@ -759,8 +773,9 @@ if __name__ == "__main__":
     print()
 
     # 根据 transport 类型启动不同的服务
+    app=init_server(str(memory_path))
     if transport == "sse":
-        asyncio.run(main(str(memory_path), port))
+        asyncio.run(main_sse(app, port))
     else:
         from mcp.server.stdio import stdio_server
         
