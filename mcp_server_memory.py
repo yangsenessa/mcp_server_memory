@@ -598,8 +598,9 @@ if __name__ == "__main__":
 
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='MCP Memory Server')
-    parser.add_argument('--port', type=int, help='服务器端口号')
+    parser.add_argument('--port', type=int, help='服务器端口号 (仅在 transport=sse 时需要)')
     parser.add_argument('--memory-path', type=str, help='内存文件路径')
+    parser.add_argument('--transport', type=str, choices=['stdio', 'sse'], default='sse', help='传输类型 (stdio 或 sse)')
     
     args = parser.parse_args()
     
@@ -627,19 +628,24 @@ if __name__ == "__main__":
                         "jsonrpc": "2.0",
                         "result": {
                             "type": "mcp",
-                            "description": "此服务是提供memory相关的mcp服务，支持sse调用",
+                            "description": "此服务是提供memory相关的mcp服务",
                             "author": "shadow@Mixlab",
                             "github": "https://github.com/shadowcz007/memory_mcp",
+                            "transport": ["stdio", "sse"],
                             "methods": [
                                 {
                                     "name": "help",
                                     "description": "显示此帮助信息。"
                                 },
                                 {
-                                    "name": "method_name",
-                                    "description": "这是另一个方法，用于执行特定的功能"
-                                },
-                                # 可以继续添加其他的方法信息
+                                    "name": "start",
+                                    "description": "启动服务器",
+                                    "params": {
+                                        "transport": "传输类型 (stdio 或 sse, 默认为sse)",
+                                        "port": "服务器端口号 (仅在 transport=sse 时需要设置)",
+                                        "memory_path": "内存文件路径"
+                                    }
+                                }
                             ]
                         },
                         "id": stdin_config["id"]
@@ -653,10 +659,16 @@ if __name__ == "__main__":
                     "params" in stdin_config):
                     
                     params = stdin_config["params"]
-                    port = params.get("port", 8080)
+                    transport = params.get("transport", "sse")
                     memory_path = params.get("memory_path", "./memory.json")
-                    # print(f"从stdin读取配置: 端口={port}, 内存路径={memory_path}")
-                    # sys.exit(0)  # 退出程序，因为已经处理了请求
+                    
+                    # 只在 sse 模式下获取端口参数
+                    if transport == "sse":
+                        port = params.get("port")
+                        if port is None:
+                            port = 8080  # 默认端口
+                    else:
+                        port = None  # stdio 模式下不需要端口
 
                 # port = stdin_config.get('port')
                 # memory_path = stdin_config.get('memory_path')
@@ -700,6 +712,19 @@ if __name__ == "__main__":
     print(f"Memory file will be stored at: {memory_path.resolve()}")
     print(f"Server will run on port: {port}")
     
+    # 获取 transport 参数
+    transport = args.transport
+    
+    # 根据 transport 类型处理端口参数
+    if transport == "sse":
+        if port is None:  # 如果之前没有从 stdin 或命令行获取到端口
+            default_port = str(last_config.get('port', 8080))
+            port = int(get_user_input("请输入服务器端口号", default_port))
+            print(f"服务器将在端口 {port} 上运行")
+    else:  # stdio 模式
+        port = None
+        print("使用 stdio 模式运行，无需设置端口")
+    
     # 保存配置并启动服务器
     if sys.platform == "win32":
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -717,4 +742,20 @@ if __name__ == "__main__":
     print()
     print()
 
-    asyncio.run(main(str(memory_path), port))
+    # 根据 transport 类型启动不同的服务
+    if transport == "sse":
+        asyncio.run(main(str(memory_path), port))
+    else:
+        from mcp.server.stdio import stdio_server
+        
+        async def run_stdio():
+            async with stdio_server() as streams:
+                app = Server("memory-manager")
+                # ... 设置 app handlers ...
+                await app.run(
+                    streams[0], 
+                    streams[1], 
+                    app.create_initialization_options()
+                )
+        
+        asyncio.run(run_stdio())
