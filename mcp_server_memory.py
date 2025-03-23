@@ -9,6 +9,8 @@ from mcp.server.sse import SseServerTransport
 import mcp.types as types
 from starlette.applications import Starlette
 from starlette.routing import Mount, Route 
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 
 
 # 定义数据结构 
@@ -494,17 +496,29 @@ async def main(memory_path: str, port: int = 8080):
                 streams[0], streams[1], app.create_initialization_options()
             )
             
+    # 添加 CORS 中间件配置        
+    middleware = [
+        Middleware(
+            CORSMiddleware,
+            allow_origins=["*"],  # 允许所有来源，生产环境建议设置具体域名
+            allow_credentials=True,
+            allow_methods=["*"],  # 允许所有方法
+            allow_headers=["*"],  # 允许所有请求头
+        )
+    ]
+            
     starlette_app = Starlette(
         debug=True,
         routes=[
             Route("/", endpoint=handle_sse),
             Mount("/messages/", app=sse.handle_post_message),
         ],
+        middleware=middleware  # 添加中间件配置
     )
 
     # 启动服务器
     import uvicorn
-    config = uvicorn.Config(starlette_app, host="localhost", port=port)
+    config = uvicorn.Config(starlette_app, host="0.0.0.0", port=port)
     server = uvicorn.Server(config)
     await server.serve()
 
