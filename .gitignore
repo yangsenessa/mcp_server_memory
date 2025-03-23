@@ -6,3 +6,4 @@ memory.json
 *.spec
 /venv_mcp_server_memory
 .DS_Store
+/__pycache__

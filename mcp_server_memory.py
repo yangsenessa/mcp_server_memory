@@ -599,7 +599,6 @@ if __name__ == "__main__":
     import asyncio
     import argparse
     import sys
-    import select
 
     # 创建命令行参数解析器
     parser = argparse.ArgumentParser(description='MCP Memory Server')
@@ -608,6 +607,26 @@ if __name__ == "__main__":
     parser.add_argument('--transport', type=str, choices=['stdio', 'sse'], default='sse', help='传输类型 (stdio 或 sse)')
     
     args = parser.parse_args()
+
+    if args.transport == 'stdio':
+        from mcp.server.stdio import stdio_server
+        async def run_stdio():
+
+            if getattr(sys, 'frozen', False):
+                memory_path = Path(sys.executable).parent / "memory.json"
+            else:
+                memory_path = Path(__file__).parent / "memory.json"
+        
+            app=init_server(str(memory_path))
+            async with stdio_server() as (read_stream, write_stream):
+                await app.run(
+                    read_stream,
+                    write_stream,
+                    app.create_initialization_options()
+                )
+                
+        asyncio.run(run_stdio())
+        sys.exit(0)
     
     # 加载上次的配置
     last_config = load_config()
@@ -703,7 +722,7 @@ if __name__ == "__main__":
     
     # 获取 transport 参数
     transport = args.transport
-    
+
     if transport != "stdio":
         # 如果没有 stdin 输入，检查命令行参数
         if port is None:
@@ -773,20 +792,19 @@ if __name__ == "__main__":
     print()
 
     # 根据 transport 类型启动不同的服务
-    app=init_server(str(memory_path))
+    
     if transport == "sse":
+        app=init_server(str(memory_path))
         asyncio.run(main_sse(app, port))
     else:
         from mcp.server.stdio import stdio_server
-        
         async def run_stdio():
-            async with stdio_server() as streams:
-                app = Server("memory-manager")
-                # ... 设置 app handlers ...
+            app=init_server(str(memory_path))
+            async with stdio_server() as (read_stream, write_stream):
                 await app.run(
-                    streams[0], 
-                    streams[1], 
+                    read_stream,
+                    write_stream,
                     app.create_initialization_options()
                 )
-        
+                
         asyncio.run(run_stdio())
