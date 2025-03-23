@@ -518,7 +518,30 @@ async def main(memory_path: str, port: int = 8080):
 
     # 启动服务器
     import uvicorn
-    config = uvicorn.Config(starlette_app, host="0.0.0.0", port=port)
+    import socket
+
+    def get_local_ip():
+        try:
+            # 获取本机主机名
+            hostname = socket.gethostname()
+            # 获取本机IP地址
+            ip = socket.gethostbyname(hostname)
+            return ip
+        except:
+            return "127.0.0.1"
+
+    local_ip = get_local_ip()
+    print(f"\n🚀 服务器启动成功!")
+    print(f"📡 本地访问地址: http://127.0.0.1:{port}")
+    print(f"📡 局域网访问地址: http://{local_ip}:{port}")
+    print("\n按 CTRL+C 停止服务器\n")
+
+    config = uvicorn.Config(
+        starlette_app, 
+        host="0.0.0.0", 
+        port=port,
+        log_level="warning"  # 减少不必要的日志输出
+    )
     server = uvicorn.Server(config)
     await server.serve()
 
