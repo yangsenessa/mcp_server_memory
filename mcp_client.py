@@ -43,11 +43,15 @@ async def run():
                     print("--------------------------------")
                     # 列出可用工具
                     tools = await session.list_tools()
-                    print(f"可用工具: {json.dumps(tools, indent=2, ensure_ascii=False)}")
+                    # 将 ListToolsResult 对象转换为可序列化的字典
+                    tools_dict = {"tools": [tool.model_dump() for tool in tools.tools]}
+                    print(f"可用工具: {json.dumps(tools_dict, indent=2, ensure_ascii=False)}")
                     print("--------------------------------")
                     # 这里可以添加调用工具的代码
                     result = await session.call_tool("read_graph", {})
-                    print("调用工具read_graph:", json.dumps(result, indent=2, ensure_ascii=False))
+                    # 同样需要确保 result 是可序列化的
+                    result_dict = result.model_dump() if hasattr(result, "model_dump") else result
+                    print("调用工具read_graph:", json.dumps(result_dict, indent=2, ensure_ascii=False))
                     print("--------------------------------")
                     
                 except Exception as e:
