@@ -1,10 +1,12 @@
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
 import asyncio
+import platform
+import json  # 添加 json 模块导入
 
 # Create server parameters for stdio connection
 server_params = StdioServerParameters(
-    command="dist/mcp_server_memory.exe",  # 可执行文件
+    command="dist/mcp_server_memory" if platform.system() != "Windows" else "dist/mcp_server_memory.exe",  # 根据系统选择可执行文件
     args=["--transport", "stdio"],  # 确保使用 stdio 传输模式
     env=None,  # 可选环境变量
 )
@@ -38,14 +40,15 @@ async def run():
                     print("正在初始化会话...")
                     await session.initialize()
                     print("会话初始化成功")
-                    
+                    print("--------------------------------")
                     # 列出可用工具
                     tools = await session.list_tools()
-                    print(f"可用工具: {tools}")
-                    
+                    print(f"可用工具: {json.dumps(tools, indent=2, ensure_ascii=False)}")
+                    print("--------------------------------")
                     # 这里可以添加调用工具的代码
-                    # 例如: result = await session.call_tool("read_graph", {})
-                    # print(result)
+                    result = await session.call_tool("read_graph", {})
+                    print("调用工具read_graph:", json.dumps(result, indent=2, ensure_ascii=False))
+                    print("--------------------------------")
                     
                 except Exception as e:
                     print(f"会话操作错误: {e}")
