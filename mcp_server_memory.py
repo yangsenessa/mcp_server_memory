@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 from mcp.server import Server, NotificationOptions
 from mcp.server.models import InitializationOptions
+from mcp.server.lowlevel.helper_types import ReadResourceContents
 from mcp.server.sse import SseServerTransport
 import mcp.types as types
 from starlette.applications import Starlette
@@ -343,9 +344,12 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             if topic == "all":
                 graph = await graph_manager.read_graph()
                 entity_names = [entity.name for entity in graph.entities]
-                content = "\n".join(f"- {name}" for name in entity_names)
                 logger.debug(f"Returning all node names: {len(entity_names)} nodes found")
-                return content
+
+                return [ReadResourceContents(
+                                content=name,
+                                mime_type="text/plain"
+                            )  for name in entity_names]  
             
             # 搜索知识图谱中与主题相关的信息
             search_result = await graph_manager.search_nodes(topic)

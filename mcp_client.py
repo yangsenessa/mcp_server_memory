@@ -6,16 +6,16 @@ import platform
 import json  # 添加 json 模块导入
 
 # Create server parameters for stdio connection
-server_params = StdioServerParameters(
-    command="dist/mcp_server_memory" if platform.system() != "Windows" else "dist/mcp_server_memory.exe",  # 根据系统选择可执行文件
-    args=["--transport", "stdio"],  # 确保使用 stdio 传输模式
-    env=None,  # 可选环境变量
-)
 # server_params = StdioServerParameters(
-#     command="python",  # 根据系统选择可执行文件
-#     args=["mcp_server_memory.py","--transport", "stdio"],  # 确保使用 stdio 传输模式
+#     command="dist/mcp_server_memory" if platform.system() != "Windows" else "dist/mcp_server_memory.exe",  # 根据系统选择可执行文件
+#     args=["--transport", "stdio"],  # 确保使用 stdio 传输模式
 #     env=None,  # 可选环境变量
 # )
+server_params = StdioServerParameters(
+    command="python",  # 根据系统选择可执行文件
+    args=["mcp_server_memory.py","--transport", "stdio"],  # 确保使用 stdio 传输模式
+    env=None,  # 可选环境变量
+)
 
 # Optional: create a sampling callback
 async def handle_sampling_message(
