@@ -388,15 +388,9 @@ def init_server(memory_path, log_level=logging.CRITICAL):
                 content = f"未找到与 {topic} 相关的信息"
                 logger.warning(f"No information found for topic: {topic}")
             
-            messages.append(
-                types.SamplingMessage(
-                    role="assistant",
-                    content=types.TextContent(type="text", text=content)
-                )
-            )
             
             # 添加用户请求
-            prompt = f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
+            prompt = content+"\n------\n"+f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
             messages.append(
                 types.SamplingMessage(
                     role="user",
