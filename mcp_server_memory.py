@@ -315,8 +315,8 @@ def init_server(memory_path, log_level=logging.CRITICAL):
     async def handle_list_resources() -> list[types.Resource]:
         return [
             types.Resource(
-                name="memory_resource",
-                uri="memory://short-story/all",
+                name="topic",
+                uri="memory://topic",
                 description="从知识图谱中读取生成短故事的主题",
                 mimeType="text/plain"
             )
@@ -330,7 +330,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
         
         try:
             # 检查URI格式
-            if not str(uri).startswith("memory://short-story/"):
+            if not str(uri).startswith("memory://"):
                 error_msg = f"Invalid URI format: {uri}"
                 logger.error(error_msg)
                 raise ValueError(error_msg)
@@ -341,7 +341,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             logger.debug(f"Extracted topic: {topic}")
             
             # 处理 "all" 请求 - 返回所有节点名称
-            if topic == "all":
+            if str(uri) == "memory://topic":
                 graph = await graph_manager.read_graph()
                 entity_names = [entity.name for entity in graph.entities]
                 logger.debug(f"Returning all node names: {len(entity_names)} nodes found")
