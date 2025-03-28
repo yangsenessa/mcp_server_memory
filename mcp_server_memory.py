@@ -16,6 +16,8 @@ from urllib.parse import unquote
 import logging
 from datetime import datetime
 
+MEMORY_VERSION="1.1.0"
+
 # 定义数据结构 
 @dataclass
 class Entity:
@@ -252,7 +254,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
     graph_manager = KnowledgeGraphManager(str(memory_path))
 
     app = Server("memory-manager",
-                 version="1.1.0",
+                 version=MEMORY_VERSION,
                  instructions="This is a memory manager server for short story generation")
 
     # 将custom_initialization_options定义为独立函数
@@ -829,6 +831,7 @@ if __name__ == "__main__":
                             "type": "mcp",
                             "description": "此服务是提供memory相关的mcp服务",
                             "author": "shadow@Mixlab",
+                            "version": MEMORY_VERSION,
                             "github": "https://github.com/shadowcz007/memory_mcp",
                             "transport": ["stdio", "sse"],
                             "methods": [
