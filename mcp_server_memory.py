@@ -394,7 +394,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             messages.append(
                 types.SamplingMessage(
                     role="user",
-                    content=prompt
+                    content=types.TextContent(type="text", text=prompt)
                 )
             )
             
