@@ -336,7 +336,10 @@ def init_server(memory_path, log_level=logging.CRITICAL):
     async def handle_read_resource(uri) -> list[types.TextResourceContents]:
         logger = logging.getLogger(__name__)
         logger.debug(f"Reading resource with URI: {uri}")
-        
+        # 获取当前请求上下文
+        context = app.request_context
+        # 从上下文中获取请求 ID
+        request_id = context.request_id
         try:
             # 检查URI格式
             if not str(uri).startswith("memory://"):
@@ -405,7 +408,8 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             
             result = await app.request_context.session.create_message(
                 max_tokens=1024,
-                messages=messages
+                messages=messages,
+                metadata={"topic": topic,"request_id":request_id}
             )
             logger.debug("Received response from sampling request")
             logger.debug("result.content.text: "+result.content.text)
