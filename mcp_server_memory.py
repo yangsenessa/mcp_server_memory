@@ -13,6 +13,8 @@ from starlette.routing import Mount, Route
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from urllib.parse import unquote
+import logging
+from datetime import datetime
 
 # 定义数据结构 
 @dataclass
@@ -221,13 +223,33 @@ class KnowledgeGraphManager:
             relations=filtered_relations
         )
     
-def init_server(memory_path):
-
-    # 转换为绝对路径并显示
-    absolute_memory_path = Path(memory_path).resolve()
-    # print(f"Starting Memory MCP Server with memory path: {absolute_memory_path}")
+def init_server(memory_path, log_level=logging.CRITICAL):
+    # 添加日志设置
+    if getattr(sys, 'frozen', False):
+        log_path = Path(sys.executable).parent / "logs"
+    else:
+        log_path = Path(__file__).parent / "logs"
     
-    graph_manager = KnowledgeGraphManager(str(absolute_memory_path))
+    # 创建日志目录
+    log_path.mkdir(exist_ok=True)
+    
+    # 设置日志文件名（使用当前日期）
+    log_file = log_path / f"memory_server_{datetime.now().strftime('%Y%m%d')}.log"
+    
+    # 配置日志
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(log_file, encoding='utf-8'),
+            logging.StreamHandler()  # 同时输出到控制台
+        ]
+    )
+    
+    logger = logging.getLogger(__name__)
+    logger.info(f"Starting Memory MCP Server with memory path: {Path(memory_path).resolve()}")
+    
+    graph_manager = KnowledgeGraphManager(str(memory_path))
 
     app = Server("memory-manager",
                  version="1.1.0",
@@ -297,53 +319,57 @@ def init_server(memory_path):
             )
         ]
 
-    # 创建读取资源的代码
+    # 修改 handle_read_resource 添加日志
     @app.read_resource()
     async def handle_read_resource(uri) -> list[types.TextResourceContents]:
-        # print(f"Reading resource with URI: {uri}")
-        # 注意返回的是str 而不是list[types.TextResourceContents]
+        logger = logging.getLogger(__name__)
+        logger.debug(f"Reading resource with URI: {uri}")
+        
         try:
             # 检查URI格式
             if not str(uri).startswith("memory://short-story/"):
-                raise ValueError(f"Invalid URI format: {uri}")
+                error_msg = f"Invalid URI format: {uri}"
+                logger.error(error_msg)
+                raise ValueError(error_msg)
                 
             # 从 URI 中提取并解码主题名称
-            # 例如从 "memory://short-story/cat" 提取并解码 "cat"
             topic = str(uri).split('/')[-1]
-            
             topic = unquote(topic)
-            # print(f"topic: {topic}")
+            logger.debug(f"Extracted topic: {topic}")
+            
             # 搜索知识图谱中与主题相关的信息
             search_result = await graph_manager.search_nodes(topic)
-            # print(f"search_result: {search_result}")
+            logger.debug(f"Search result: {len(search_result.entities)} entities, {len(search_result.relations)} relations")
+            
             # 构建上下文信息
             context = []
             for entity in search_result.entities:
+                logger.debug(f"Processing entity: {entity.name}")
                 context.append(f"实体名称: {entity.name}")
                 context.append(f"实体类型: {entity.entityType}")
                 context.append("相关观察:")
                 for obs in entity.observations:
                     context.append(f"- {obs}")
-                context.append("")  # 添加空行分隔
-            # print(f"context: {context}") 
-
+                context.append("")
+            
             # 构建消息列表
-            messages=[] 
-
+            messages = []
+            
             if context:
-                content = "以下是与主题相关的已知信息：\n" + "\n".join(context)  
+                content = "以下是与主题相关的已知信息：\n" + "\n".join(context)
+                logger.debug("Context information built successfully")
             else:
-                content= f"未找到与 {topic} 相关的信息"
+                content = f"未找到与 {topic} 相关的信息"
+                logger.warning(f"No information found for topic: {topic}")
             
             messages.append(
-                     types.SamplingMessage(
-                        role="assistant",
-                        content=types.TextContent(type="text", text=content)
-                    )
+                types.SamplingMessage(
+                    role="assistant",
+                    content=types.TextContent(type="text", text=content)
+                )
             )
             
             # 添加用户请求
-            
             prompt = f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
             messages.append(
                 types.SamplingMessage(
@@ -351,15 +377,21 @@ def init_server(memory_path):
                     content=types.TextContent(type="text", text=prompt)
                 )
             )
-
-            # 发送采样请求
+            
+            logger.debug("Sending sampling request")
+            
             result = await app.request_context.session.create_message(
                 max_tokens=1024,
                 messages=messages
             )
+            logger.debug("Received response from sampling request")
+            logger.debug("result.content.text: "+result.content.text)
             return result.content.text
+            
         except Exception as e:
-            return f"处理资源时出错: {str(e)}"
+            error_msg = f"处理资源时出错: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            return error_msg
         
 
     @app.list_tools()
@@ -931,15 +963,4 @@ if __name__ == "__main__":
     if transport == "sse":
         app=init_server(str(memory_path))
         asyncio.run(main_sse(app, port))
-    else:
-        from mcp.server.stdio import stdio_server
-        async def run_stdio():
-            app=init_server(str(memory_path))
-            async with stdio_server() as (read_stream, write_stream):
-                await app.run(
-                    read_stream,
-                    write_stream,
-                    app.create_initialization_options()
-                )
-                
-        asyncio.run(run_stdio())
+    

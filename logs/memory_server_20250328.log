@@ -1,0 +1,1040 @@
+2025-03-28 15:02:40,833 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:02:40,835 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:02:40,836 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:02:40,836 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:02:40,836 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:02:40,837 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:02:40,837 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:02:40,850 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:02:40,853 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020BEEEF8A00>
+2025-03-28 15:02:40,854 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:02:40,854 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:02:40,855 - DEBUG - Response sent
+2025-03-28 15:02:40,861 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020BEEEF9690>
+2025-03-28 15:02:40,861 - INFO - Processing request of type ListToolsRequest
+2025-03-28 15:02:40,862 - DEBUG - Dispatching request of type ListToolsRequest
+2025-03-28 15:02:40,864 - DEBUG - Response sent
+2025-03-28 15:02:40,892 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020BEEEF9540>
+2025-03-28 15:02:40,893 - INFO - Processing request of type CallToolRequest
+2025-03-28 15:02:40,894 - DEBUG - Dispatching request of type CallToolRequest
+2025-03-28 15:02:40,895 - DEBUG - Response sent
+2025-03-28 15:03:11,150 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:03:11,151 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:03:11,152 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:03:11,152 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:03:11,152 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:03:11,153 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:03:11,153 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:03:11,168 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:03:11,170 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000019DBD2189D0>
+2025-03-28 15:03:11,170 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:03:11,171 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:03:11,172 - DEBUG - Response sent
+2025-03-28 15:03:11,178 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000019DBD219690>
+2025-03-28 15:03:11,179 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:03:11,180 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:03:11,180 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:03:11,180 - DEBUG - Extracted topic: default
+2025-03-28 15:03:11,182 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:03:11,182 - WARNING - No information found for topic: default
+2025-03-28 15:03:11,183 - DEBUG - Sending sampling request
+2025-03-28 15:11:37,922 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:11:37,923 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:11:37,924 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:11:37,924 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:11:37,924 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:11:37,925 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:11:37,925 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:11:37,940 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:11:37,941 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000024A2B550C10>
+2025-03-28 15:11:37,942 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:11:37,943 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:11:37,944 - DEBUG - Response sent
+2025-03-28 15:11:37,951 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000024A2B551900>
+2025-03-28 15:11:37,952 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:11:37,952 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:11:37,953 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:11:37,953 - DEBUG - Extracted topic: default
+2025-03-28 15:11:37,954 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:11:37,955 - WARNING - No information found for topic: default
+2025-03-28 15:11:37,955 - DEBUG - Sending sampling request
+2025-03-28 15:11:37,956 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:11:37,959 - DEBUG - Response sent
+2025-03-28 15:12:26,449 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:12:26,449 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:12:26,449 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:12:26,452 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:12:26,453 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:12:26,453 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:12:26,453 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:12:26,473 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:12:26,473 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022C43600C10>
+2025-03-28 15:12:26,473 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:12:26,473 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:12:26,477 - DEBUG - Response sent
+2025-03-28 15:12:26,483 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022C436018D0>
+2025-03-28 15:12:26,483 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:12:26,485 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:12:26,485 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:12:26,486 - DEBUG - Extracted topic: default
+2025-03-28 15:12:26,487 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:12:26,487 - WARNING - No information found for topic: default
+2025-03-28 15:12:26,488 - DEBUG - Sending sampling request
+2025-03-28 15:12:26,488 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:12:26,493 - DEBUG - Response sent
+2025-03-28 15:13:20,933 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:13:20,936 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:13:20,936 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:13:20,937 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:13:20,937 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:13:20,937 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:13:20,937 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:13:20,950 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:13:20,950 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001A419770C10>
+2025-03-28 15:13:20,951 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:13:20,951 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:13:20,953 - DEBUG - Response sent
+2025-03-28 15:13:20,957 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001A4197718D0>
+2025-03-28 15:13:20,959 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:13:20,959 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:13:20,959 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:13:20,960 - DEBUG - Extracted topic: default
+2025-03-28 15:13:20,961 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:13:20,961 - WARNING - No information found for topic: default
+2025-03-28 15:13:20,962 - DEBUG - Sending sampling request
+2025-03-28 15:13:20,962 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:13:20,964 - DEBUG - Response sent
+2025-03-28 15:14:17,611 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:14:17,612 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:14:17,613 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:14:17,614 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:14:17,614 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:14:17,614 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:14:17,615 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:14:17,635 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:14:17,637 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000188F8BF4BB0>
+2025-03-28 15:14:17,638 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:14:17,639 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:14:17,640 - DEBUG - Response sent
+2025-03-28 15:14:17,646 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000188F8BF5870>
+2025-03-28 15:14:17,647 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:14:17,648 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:14:17,648 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:14:17,649 - DEBUG - Extracted topic: default
+2025-03-28 15:14:17,650 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:14:17,650 - WARNING - No information found for topic: default
+2025-03-28 15:14:17,650 - DEBUG - Sending sampling request
+2025-03-28 15:14:17,651 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:14:17,654 - DEBUG - Response sent
+2025-03-28 15:14:28,610 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:14:28,611 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:14:28,612 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:14:28,612 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:14:28,612 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:14:28,613 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:14:28,613 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:14:28,626 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:14:28,627 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001F0E10A0C10>
+2025-03-28 15:14:28,627 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:14:28,627 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:14:28,628 - DEBUG - Response sent
+2025-03-28 15:14:28,632 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001F0E10A18D0>
+2025-03-28 15:14:28,633 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:14:28,634 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:14:28,634 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:14:28,634 - DEBUG - Extracted topic: default
+2025-03-28 15:14:28,635 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:14:28,635 - WARNING - No information found for topic: default
+2025-03-28 15:14:28,636 - DEBUG - Sending sampling request
+2025-03-28 15:14:28,636 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:14:28,638 - DEBUG - Response sent
+2025-03-28 15:15:02,665 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:15:02,667 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:15:02,667 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:15:02,667 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:15:02,668 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:15:02,668 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:15:02,668 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:15:02,682 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:15:02,683 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000017D709F4BE0>
+2025-03-28 15:15:02,684 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:15:02,684 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:15:02,685 - DEBUG - Response sent
+2025-03-28 15:15:02,690 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000017D709F58A0>
+2025-03-28 15:15:02,691 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:15:02,691 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:15:02,692 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:15:02,692 - DEBUG - Extracted topic: default
+2025-03-28 15:15:02,693 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:15:02,694 - WARNING - No information found for topic: default
+2025-03-28 15:15:02,694 - DEBUG - Sending sampling request
+2025-03-28 15:15:02,694 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:15:02,698 - DEBUG - Response sent
+2025-03-28 15:15:45,135 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:15:45,137 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:15:45,137 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:15:45,137 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:15:45,138 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:15:45,138 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:15:45,138 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:15:45,151 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:15:45,153 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000175E86F8B80>
+2025-03-28 15:15:45,153 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:15:45,154 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:15:45,154 - DEBUG - Response sent
+2025-03-28 15:15:45,160 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000175E86F9840>
+2025-03-28 15:15:45,161 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:15:45,161 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:15:45,161 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:15:45,162 - DEBUG - Extracted topic: default
+2025-03-28 15:15:45,163 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:15:45,163 - WARNING - No information found for topic: default
+2025-03-28 15:15:45,163 - DEBUG - Sending sampling request
+2025-03-28 15:15:45,164 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:15:45,166 - DEBUG - Response sent
+2025-03-28 15:16:52,797 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:16:52,800 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:16:52,800 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:16:52,800 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:16:52,801 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:16:52,801 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:16:52,802 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:16:52,821 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:16:52,823 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022B37ED0C10>
+2025-03-28 15:16:52,824 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:16:52,824 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:16:52,825 - DEBUG - Response sent
+2025-03-28 15:16:52,832 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022B37ED18D0>
+2025-03-28 15:16:52,833 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:16:52,833 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:16:52,834 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:16:52,834 - DEBUG - Extracted topic: default
+2025-03-28 15:16:52,836 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:16:52,836 - WARNING - No information found for topic: default
+2025-03-28 15:16:52,837 - DEBUG - Sending sampling request
+2025-03-28 15:16:52,837 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:16:52,841 - DEBUG - Response sent
+2025-03-28 15:19:12,103 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:19:12,104 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:19:12,104 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:19:12,104 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:19:12,105 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:19:12,105 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:19:12,105 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:19:12,126 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:19:12,127 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000242B7350C10>
+2025-03-28 15:19:12,130 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:19:12,130 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:19:12,133 - DEBUG - Response sent
+2025-03-28 15:19:12,138 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000242B73518D0>
+2025-03-28 15:19:12,140 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:19:12,141 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:19:12,141 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:19:12,141 - DEBUG - Extracted topic: default
+2025-03-28 15:19:12,143 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:19:12,143 - WARNING - No information found for topic: default
+2025-03-28 15:19:12,143 - DEBUG - Sending sampling request
+2025-03-28 15:19:12,143 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 383, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:19:12,148 - DEBUG - Response sent
+2025-03-28 15:19:29,445 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:19:29,447 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:19:29,449 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:19:29,449 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:19:29,450 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:19:29,450 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:19:29,451 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:19:29,479 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:19:29,481 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001D6A0E48B50>
+2025-03-28 15:19:29,482 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:19:29,483 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:19:29,484 - DEBUG - Response sent
+2025-03-28 15:19:29,492 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001D6A0E49810>
+2025-03-28 15:19:29,493 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:19:29,493 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:19:29,494 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:19:29,494 - DEBUG - Extracted topic: default
+2025-03-28 15:19:29,495 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:19:29,496 - WARNING - No information found for topic: default
+2025-03-28 15:19:29,496 - DEBUG - Sending sampling request
+2025-03-28 15:20:18,837 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:20:18,838 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:20:18,839 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:20:18,839 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:20:18,839 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:20:18,839 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:20:18,840 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:20:18,859 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:20:18,859 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020EA1270C10>
+2025-03-28 15:20:18,860 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:20:18,860 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:20:18,861 - DEBUG - Response sent
+2025-03-28 15:20:18,866 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020EA12718D0>
+2025-03-28 15:20:18,866 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:20:18,867 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:20:18,867 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:20:18,868 - DEBUG - Extracted topic: default
+2025-03-28 15:20:18,869 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:20:18,869 - WARNING - No information found for topic: default
+2025-03-28 15:20:18,870 - DEBUG - Sending sampling request
+2025-03-28 15:20:18,870 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:20:18,873 - DEBUG - Response sent
+2025-03-28 15:22:44,249 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:22:44,250 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:22:44,250 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:22:44,251 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:22:44,251 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:22:44,251 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:22:44,252 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:22:44,266 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:22:44,267 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000015B10894BE0>
+2025-03-28 15:22:44,268 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:22:44,268 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:22:44,269 - DEBUG - Response sent
+2025-03-28 15:22:44,274 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000015B108958A0>
+2025-03-28 15:22:44,275 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:22:44,276 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:22:44,276 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:22:44,276 - DEBUG - Extracted topic: default
+2025-03-28 15:22:44,278 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:22:44,278 - WARNING - No information found for topic: default
+2025-03-28 15:22:44,278 - DEBUG - Sending sampling request
+2025-03-28 15:22:44,279 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:22:44,282 - DEBUG - Response sent
+2025-03-28 15:25:58,117 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:25:58,118 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:25:58,119 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:25:58,119 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:25:58,119 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:25:58,120 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:25:58,120 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:25:58,136 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:25:58,137 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C669E04BB0>
+2025-03-28 15:25:58,138 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:25:58,138 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:25:58,139 - DEBUG - Response sent
+2025-03-28 15:25:58,145 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C669E05870>
+2025-03-28 15:25:58,145 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:25:58,146 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:25:58,146 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:25:58,147 - DEBUG - Extracted topic: default
+2025-03-28 15:25:58,148 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:25:58,148 - WARNING - No information found for topic: default
+2025-03-28 15:25:58,149 - DEBUG - Sending sampling request
+2025-03-28 15:25:58,149 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:25:58,152 - DEBUG - Response sent
+2025-03-28 15:26:38,975 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:26:38,977 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:26:38,977 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:26:38,977 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:26:38,977 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:26:38,979 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:26:38,979 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:26:38,993 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:26:38,994 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001DB69CB4BB0>
+2025-03-28 15:26:38,995 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:26:38,995 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:26:38,996 - DEBUG - Response sent
+2025-03-28 15:26:39,002 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001DB69CB5870>
+2025-03-28 15:26:39,003 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:26:39,003 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:26:39,004 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:26:39,004 - DEBUG - Extracted topic: default
+2025-03-28 15:26:39,006 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:26:39,006 - WARNING - No information found for topic: default
+2025-03-28 15:26:39,007 - DEBUG - Sending sampling request
+2025-03-28 15:26:39,007 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:26:39,011 - DEBUG - Response sent
+2025-03-28 15:26:58,956 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:26:58,957 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:26:58,957 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:26:58,958 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:26:58,958 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:26:58,958 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:26:58,958 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:26:58,973 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:26:58,975 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001E83E6D0C10>
+2025-03-28 15:26:58,975 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:26:58,976 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:26:58,976 - DEBUG - Response sent
+2025-03-28 15:26:58,983 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001E83E6D18D0>
+2025-03-28 15:26:58,984 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:26:58,984 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:26:58,984 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:26:58,985 - DEBUG - Extracted topic: default
+2025-03-28 15:26:58,986 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:26:58,986 - WARNING - No information found for topic: default
+2025-03-28 15:26:58,987 - DEBUG - Sending sampling request
+2025-03-28 15:26:58,987 - ERROR - 处理资源时出错: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+TypeError: ServerSession.create_message() got an unexpected keyword argument 'progress_callback'
+2025-03-28 15:26:58,991 - DEBUG - Response sent
+2025-03-28 15:27:19,658 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:27:19,659 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:27:19,659 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:27:19,660 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:27:19,660 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:27:19,660 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:27:19,661 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:27:19,674 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:27:19,675 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000213DB2C0C10>
+2025-03-28 15:27:19,675 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:27:19,675 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:27:19,676 - DEBUG - Response sent
+2025-03-28 15:27:19,681 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000213DB2C1900>
+2025-03-28 15:27:19,682 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:27:19,682 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:27:19,683 - DEBUG - Reading resource with URI: memory://short-story/default
+2025-03-28 15:27:19,683 - DEBUG - Extracted topic: default
+2025-03-28 15:27:19,684 - DEBUG - Search result: 0 entities, 0 relations
+2025-03-28 15:27:19,684 - WARNING - No information found for topic: default
+2025-03-28 15:27:19,685 - DEBUG - Sending sampling request
+2025-03-28 15:27:45,197 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:27:45,198 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:27:45,199 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:27:45,199 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:27:45,199 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:27:45,200 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:27:45,200 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:27:45,217 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:27:45,218 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001EAC0470C10>
+2025-03-28 15:27:45,218 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:27:45,219 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:27:45,220 - DEBUG - Response sent
+2025-03-28 15:27:45,226 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001EAC04718D0>
+2025-03-28 15:27:45,227 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:27:45,227 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:27:45,228 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:27:45,228 - DEBUG - Extracted topic: 草图
+2025-03-28 15:27:45,230 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:27:45,230 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:27:45,230 - DEBUG - Processing entity: 草图
+2025-03-28 15:27:45,231 - DEBUG - Context information built successfully
+2025-03-28 15:27:45,231 - DEBUG - Sending sampling request
+2025-03-28 15:32:36,692 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:32:36,694 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:32:36,694 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:32:36,694 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:32:36,695 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:32:36,695 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:32:36,696 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:32:36,709 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:32:36,710 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000245A5238B80>
+2025-03-28 15:32:36,711 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:32:36,711 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:32:36,712 - DEBUG - Response sent
+2025-03-28 15:32:36,716 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000245A5239840>
+2025-03-28 15:32:36,717 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:32:36,717 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:32:36,718 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:32:36,718 - DEBUG - Extracted topic: 草图
+2025-03-28 15:32:36,719 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:32:36,720 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:32:36,720 - DEBUG - Processing entity: 草图
+2025-03-28 15:32:36,720 - DEBUG - Context information built successfully
+2025-03-28 15:32:36,721 - DEBUG - Sending sampling request
+2025-03-28 15:34:29,043 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:34:29,047 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:34:29,047 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:34:29,047 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:34:29,047 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:34:29,047 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:34:29,047 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:34:29,062 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:34:29,062 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000154EAD64BE0>
+2025-03-28 15:34:29,063 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:34:29,064 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:34:29,065 - DEBUG - Response sent
+2025-03-28 15:34:29,070 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000154EAD658A0>
+2025-03-28 15:34:29,071 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:34:29,072 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:34:29,072 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:34:29,073 - DEBUG - Extracted topic: 草图
+2025-03-28 15:34:29,074 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:34:29,074 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:34:29,075 - DEBUG - Processing entity: 草图
+2025-03-28 15:34:29,075 - DEBUG - Context information built successfully
+2025-03-28 15:34:29,075 - DEBUG - Sending sampling request
+2025-03-28 15:35:14,450 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:35:14,450 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:35:14,450 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:35:14,450 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:35:14,452 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:35:14,452 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:35:14,453 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:35:14,469 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:35:14,470 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001390AEF0C10>
+2025-03-28 15:35:14,471 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:35:14,472 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:35:14,472 - DEBUG - Response sent
+2025-03-28 15:35:14,478 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001390AEF18D0>
+2025-03-28 15:35:14,478 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:35:14,479 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:35:14,480 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:35:14,480 - DEBUG - Extracted topic: 草图
+2025-03-28 15:35:14,481 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:35:14,482 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:35:14,482 - DEBUG - Processing entity: 草图
+2025-03-28 15:35:14,482 - DEBUG - Context information built successfully
+2025-03-28 15:35:14,483 - DEBUG - Sending sampling request
+2025-03-28 15:35:53,688 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:35:53,689 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:35:53,690 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:35:53,690 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:35:53,690 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:35:53,691 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:35:53,691 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:35:53,704 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:35:53,705 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000023E850B4BE0>
+2025-03-28 15:35:53,705 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:35:53,706 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:35:53,706 - DEBUG - Response sent
+2025-03-28 15:35:53,711 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000023E850B58A0>
+2025-03-28 15:35:53,712 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:35:53,712 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:35:53,712 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:35:53,713 - DEBUG - Extracted topic: 草图
+2025-03-28 15:35:53,714 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:35:53,714 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:35:53,715 - DEBUG - Processing entity: 草图
+2025-03-28 15:35:53,715 - DEBUG - Context information built successfully
+2025-03-28 15:35:53,715 - DEBUG - Sending sampling request
+2025-03-28 15:35:53,719 - ERROR - 处理资源时出错: Sampling not supported
+Traceback (most recent call last):
+  File "C:\Users\38957\Documents\GitHub\mcp_simple_example\mcp_server_memory.py", line 385, in handle_read_resource
+    result = await app.request_context.session.create_message(
+  File "C:\Users\38957\AppData\Local\Programs\Python\Python310\lib\site-packages\mcp\server\session.py", line 204, in create_message
+    return await self.send_request(
+  File "C:\Users\38957\AppData\Local\Programs\Python\Python310\lib\site-packages\mcp\shared\session.py", line 250, in send_request
+    raise McpError(response_or_error.error)
+mcp.shared.exceptions.McpError: Sampling not supported
+2025-03-28 15:35:53,726 - DEBUG - Response sent
+2025-03-28 15:37:52,345 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:37:52,347 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:37:52,347 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:37:52,348 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:37:52,348 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:37:52,349 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:37:52,349 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:37:52,370 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:37:52,372 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C377B14BB0>
+2025-03-28 15:37:52,373 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:37:52,373 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:37:52,374 - DEBUG - Response sent
+2025-03-28 15:37:52,382 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C377B15870>
+2025-03-28 15:37:52,383 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:37:52,383 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:37:52,384 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:37:52,385 - DEBUG - Extracted topic: 草图
+2025-03-28 15:37:52,386 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:37:52,387 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:37:52,387 - DEBUG - Processing entity: 草图
+2025-03-28 15:37:52,387 - DEBUG - Context information built successfully
+2025-03-28 15:37:52,388 - DEBUG - Sending sampling request
+2025-03-28 15:40:22,773 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:40:22,775 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:40:22,775 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:40:22,776 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:40:22,776 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:40:22,776 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:40:22,777 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:40:22,792 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:40:22,794 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000028A04568B80>
+2025-03-28 15:40:22,794 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:40:22,795 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:40:22,796 - DEBUG - Response sent
+2025-03-28 15:40:22,802 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000028A04569840>
+2025-03-28 15:40:22,803 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:40:22,804 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:40:22,804 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:40:22,805 - DEBUG - Extracted topic: 草图
+2025-03-28 15:40:22,806 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:40:22,807 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:40:22,807 - DEBUG - Processing entity: 草图
+2025-03-28 15:40:22,807 - DEBUG - Context information built successfully
+2025-03-28 15:40:22,808 - DEBUG - Sending sampling request
+2025-03-28 15:40:22,816 - DEBUG - Received response from sampling request
+2025-03-28 15:40:22,818 - DEBUG - Response sent
+2025-03-28 15:42:31,367 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:42:31,368 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:42:31,368 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:42:31,369 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:42:31,369 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:42:31,369 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:42:31,369 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:42:31,386 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:42:31,387 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000028C11898A60>
+2025-03-28 15:42:31,388 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:42:31,389 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:42:31,390 - DEBUG - Response sent
+2025-03-28 15:42:31,396 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000028C11899720>
+2025-03-28 15:42:31,396 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:42:31,397 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:42:31,397 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:42:31,398 - DEBUG - Extracted topic: 草图
+2025-03-28 15:42:31,399 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:42:31,399 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:42:31,400 - DEBUG - Processing entity: 草图
+2025-03-28 15:42:31,400 - DEBUG - Context information built successfully
+2025-03-28 15:42:31,401 - DEBUG - Sending sampling request
+2025-03-28 15:42:31,409 - DEBUG - Received response from sampling request
+2025-03-28 15:42:31,410 - DEBUG - This is a response from the sampling callback
+2025-03-28 15:42:31,411 - DEBUG - Response sent
+2025-03-28 15:42:53,983 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:42:53,984 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:42:53,984 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:42:53,985 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:42:53,985 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:42:53,986 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:42:53,986 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:42:54,000 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:42:54,002 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001BAAC480BE0>
+2025-03-28 15:42:54,002 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:42:54,003 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:42:54,004 - DEBUG - Response sent
+2025-03-28 15:42:54,009 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001BAAC4818A0>
+2025-03-28 15:42:54,010 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:42:54,010 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:42:54,011 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:42:54,011 - DEBUG - Extracted topic: 草图
+2025-03-28 15:42:54,012 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:42:54,013 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:42:54,013 - DEBUG - Processing entity: 草图
+2025-03-28 15:42:54,013 - DEBUG - Context information built successfully
+2025-03-28 15:42:54,014 - DEBUG - Sending sampling request
+2025-03-28 15:42:54,043 - DEBUG - This is a response from the sampling callback
+2025-03-28 15:42:54,044 - DEBUG - Response sent
+2025-03-28 15:43:28,350 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:43:28,350 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:43:28,350 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:43:28,350 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:43:28,350 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:43:28,350 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:43:28,350 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:43:28,367 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:43:28,368 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001D4FD7D0BE0>
+2025-03-28 15:43:28,369 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:43:28,369 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:43:28,370 - DEBUG - Response sent
+2025-03-28 15:43:28,375 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001D4FD7D18A0>
+2025-03-28 15:43:28,376 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:43:28,376 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:43:28,377 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:43:28,378 - DEBUG - Extracted topic: 草图
+2025-03-28 15:43:28,379 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:43:28,380 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:43:28,380 - DEBUG - Processing entity: 草图
+2025-03-28 15:43:28,380 - DEBUG - Context information built successfully
+2025-03-28 15:43:28,381 - DEBUG - Sending sampling request
+2025-03-28 15:43:28,417 - DEBUG - This is a response from the sampling callback
+2025-03-28 15:43:28,418 - DEBUG - Response sent
+2025-03-28 15:43:52,915 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:43:52,916 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:43:52,917 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:43:52,917 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:43:52,917 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:43:52,917 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:43:52,918 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:43:52,930 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:43:52,931 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022E21394BB0>
+2025-03-28 15:43:52,931 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:43:52,932 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:43:52,933 - DEBUG - Response sent
+2025-03-28 15:43:52,939 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000022E21395870>
+2025-03-28 15:43:52,939 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:43:52,940 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:43:52,940 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:43:52,941 - DEBUG - Extracted topic: 草图
+2025-03-28 15:43:52,942 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:43:52,942 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:43:52,942 - DEBUG - Processing entity: 草图
+2025-03-28 15:43:52,943 - DEBUG - Context information built successfully
+2025-03-28 15:43:52,943 - DEBUG - Sending sampling request
+2025-03-28 15:43:52,951 - DEBUG - Received response from sampling requestThis is a response from the sampling callback
+2025-03-28 15:43:52,952 - DEBUG - This is a response from the sampling callback
+2025-03-28 15:43:52,953 - DEBUG - Response sent
+2025-03-28 15:44:14,979 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:44:14,979 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:44:14,979 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:44:14,979 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:44:14,982 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:44:14,983 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:44:14,983 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:44:14,997 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:44:14,999 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020262FD8AF0>
+2025-03-28 15:44:14,999 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:44:15,000 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:44:15,000 - DEBUG - Response sent
+2025-03-28 15:44:15,006 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000020262FD97E0>
+2025-03-28 15:44:15,006 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:44:15,008 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:44:15,008 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:44:15,009 - DEBUG - Extracted topic: 草图
+2025-03-28 15:44:15,009 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:44:15,010 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:44:15,010 - DEBUG - Processing entity: 草图
+2025-03-28 15:44:15,010 - DEBUG - Context information built successfully
+2025-03-28 15:44:15,010 - DEBUG - Sending sampling request
+2025-03-28 15:44:15,020 - DEBUG - Received response from sampling request
+2025-03-28 15:44:15,020 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:44:15,022 - DEBUG - Response sent
+2025-03-28 15:47:55,948 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:47:55,949 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:47:55,949 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:47:55,949 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:47:55,950 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:47:55,950 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:47:55,950 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:47:55,964 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:47:55,965 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000021627BE8B20>
+2025-03-28 15:47:55,966 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:47:55,966 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:47:55,967 - DEBUG - Response sent
+2025-03-28 15:47:55,973 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000021627BE97E0>
+2025-03-28 15:47:55,974 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:47:55,974 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:47:55,975 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:47:55,976 - DEBUG - Extracted topic: 草图
+2025-03-28 15:47:55,977 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:47:55,978 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:47:55,978 - DEBUG - Processing entity: 草图
+2025-03-28 15:47:55,978 - DEBUG - Context information built successfully
+2025-03-28 15:47:55,979 - DEBUG - Sending sampling request
+2025-03-28 15:47:55,989 - DEBUG - Received response from sampling request
+2025-03-28 15:47:55,989 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:47:55,990 - DEBUG - Response sent
+2025-03-28 15:48:26,949 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:48:26,950 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:48:26,951 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:48:26,951 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:48:26,951 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:48:26,952 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:48:26,952 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:48:26,966 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:48:26,967 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000021FB04B8AF0>
+2025-03-28 15:48:26,967 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:48:26,968 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:48:26,968 - DEBUG - Response sent
+2025-03-28 15:48:26,974 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000021FB04B97B0>
+2025-03-28 15:48:26,974 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:48:26,975 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:48:26,975 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:48:26,976 - DEBUG - Extracted topic: 草图
+2025-03-28 15:48:26,977 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:48:26,977 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:48:26,978 - DEBUG - Processing entity: 草图
+2025-03-28 15:48:26,978 - DEBUG - Context information built successfully
+2025-03-28 15:48:26,978 - DEBUG - Sending sampling request
+2025-03-28 15:48:26,986 - DEBUG - Received response from sampling request
+2025-03-28 15:48:26,986 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:48:26,988 - DEBUG - Response sent
+2025-03-28 15:52:00,736 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:52:00,737 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:52:00,738 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:52:00,738 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:52:00,738 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:52:00,739 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:52:00,739 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:52:00,754 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:52:00,755 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001F50E238B50>
+2025-03-28 15:52:00,756 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:52:00,756 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:52:00,757 - DEBUG - Response sent
+2025-03-28 15:52:00,762 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001F50E239810>
+2025-03-28 15:52:00,763 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:52:00,763 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:52:00,764 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:52:00,764 - DEBUG - Extracted topic: 草图
+2025-03-28 15:52:00,765 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:52:00,766 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:52:00,766 - DEBUG - Processing entity: 草图
+2025-03-28 15:52:00,767 - DEBUG - Context information built successfully
+2025-03-28 15:52:00,767 - DEBUG - Sending sampling request
+2025-03-28 15:52:00,775 - DEBUG - Received response from sampling request
+2025-03-28 15:52:00,775 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:52:00,776 - DEBUG - Response sent
+2025-03-28 15:53:02,479 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:53:02,480 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:53:02,481 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:53:02,481 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:53:02,481 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:53:02,481 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:53:02,482 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:53:02,495 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:53:02,497 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000211D49C8B20>
+2025-03-28 15:53:02,497 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:53:02,498 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:53:02,499 - DEBUG - Response sent
+2025-03-28 15:53:02,504 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000211D49C97E0>
+2025-03-28 15:53:02,505 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:53:02,505 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:53:02,506 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:53:02,507 - DEBUG - Extracted topic: 草图
+2025-03-28 15:53:02,508 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:53:02,508 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:53:02,508 - DEBUG - Processing entity: 草图
+2025-03-28 15:53:02,509 - DEBUG - Context information built successfully
+2025-03-28 15:53:02,509 - DEBUG - Sending sampling request
+2025-03-28 15:53:02,518 - DEBUG - Received response from sampling request
+2025-03-28 15:53:02,518 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:53:02,520 - DEBUG - Response sent
+2025-03-28 15:53:56,355 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:53:56,356 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:53:56,357 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:53:56,357 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:53:56,358 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:53:56,358 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:53:56,358 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:53:56,370 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:53:56,372 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C7D9738B20>
+2025-03-28 15:53:56,372 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:53:56,373 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:53:56,373 - DEBUG - Response sent
+2025-03-28 15:53:56,377 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C7D9739810>
+2025-03-28 15:53:56,378 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:53:56,379 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:53:56,379 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:53:56,379 - DEBUG - Extracted topic: 草图
+2025-03-28 15:53:56,381 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:53:56,381 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:53:56,381 - DEBUG - Processing entity: 草图
+2025-03-28 15:53:56,382 - DEBUG - Context information built successfully
+2025-03-28 15:53:56,382 - DEBUG - Sending sampling request
+2025-03-28 15:53:56,389 - DEBUG - Received response from sampling request
+2025-03-28 15:53:56,389 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:53:56,391 - DEBUG - Response sent
+2025-03-28 15:54:57,341 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:54:57,345 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:54:57,345 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:54:57,345 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:54:57,345 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:54:57,345 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:54:57,345 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:54:57,361 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:54:57,363 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002973E748B50>
+2025-03-28 15:54:57,364 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:54:57,364 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:54:57,365 - DEBUG - Response sent
+2025-03-28 15:54:57,370 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002973E749810>
+2025-03-28 15:54:57,371 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:54:57,371 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:54:57,372 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:54:57,373 - DEBUG - Extracted topic: 草图
+2025-03-28 15:54:57,374 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:54:57,374 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:54:57,374 - DEBUG - Processing entity: 草图
+2025-03-28 15:54:57,374 - DEBUG - Context information built successfully
+2025-03-28 15:54:57,375 - DEBUG - Sending sampling request
+2025-03-28 15:54:57,383 - DEBUG - Received response from sampling request
+2025-03-28 15:54:57,384 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:54:57,385 - DEBUG - Response sent
+2025-03-28 15:55:21,742 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:55:21,743 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:55:21,744 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:55:21,744 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:55:21,745 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:55:21,745 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:55:21,745 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:55:21,764 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:55:21,766 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000025818A78B50>
+2025-03-28 15:55:21,766 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:55:21,767 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:55:21,768 - DEBUG - Response sent
+2025-03-28 15:55:21,774 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000025818A79810>
+2025-03-28 15:55:21,775 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:55:21,775 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:55:21,775 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:55:21,776 - DEBUG - Extracted topic: 草图
+2025-03-28 15:55:21,777 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:55:21,778 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:55:21,778 - DEBUG - Processing entity: 草图
+2025-03-28 15:55:21,778 - DEBUG - Context information built successfully
+2025-03-28 15:55:21,779 - DEBUG - Sending sampling request
+2025-03-28 15:55:21,788 - DEBUG - Received response from sampling request
+2025-03-28 15:55:21,789 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:55:21,790 - DEBUG - Response sent
+2025-03-28 15:55:21,794 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000025818A78CD0>
+2025-03-28 15:55:21,795 - INFO - Processing request of type ListToolsRequest
+2025-03-28 15:55:21,795 - DEBUG - Dispatching request of type ListToolsRequest
+2025-03-28 15:55:21,797 - DEBUG - Response sent
+2025-03-28 15:55:21,824 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x0000025818A799F0>
+2025-03-28 15:55:21,825 - INFO - Processing request of type CallToolRequest
+2025-03-28 15:55:21,825 - DEBUG - Dispatching request of type CallToolRequest
+2025-03-28 15:55:21,828 - DEBUG - Response sent
+2025-03-28 15:55:42,698 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:55:42,701 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:55:42,701 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:55:42,701 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:55:42,701 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:55:42,701 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:55:42,701 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:55:42,722 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:55:42,724 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FB5A608AF0>
+2025-03-28 15:55:42,725 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:55:42,725 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:55:42,725 - DEBUG - Response sent
+2025-03-28 15:55:42,731 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FB5A6097B0>
+2025-03-28 15:55:42,733 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:55:42,733 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:55:42,734 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:55:42,735 - DEBUG - Extracted topic: 草图
+2025-03-28 15:55:42,737 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:55:42,737 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:55:42,738 - DEBUG - Processing entity: 草图
+2025-03-28 15:55:42,738 - DEBUG - Context information built successfully
+2025-03-28 15:55:42,738 - DEBUG - Sending sampling request
+2025-03-28 15:55:42,748 - DEBUG - Received response from sampling request
+2025-03-28 15:55:42,748 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:55:42,750 - DEBUG - Response sent
+2025-03-28 15:55:42,754 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FB5A608C70>
+2025-03-28 15:55:42,754 - INFO - Processing request of type ListToolsRequest
+2025-03-28 15:55:42,754 - DEBUG - Dispatching request of type ListToolsRequest
+2025-03-28 15:55:42,757 - DEBUG - Response sent
+2025-03-28 15:55:42,798 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FB5A609990>
+2025-03-28 15:55:42,799 - INFO - Processing request of type CallToolRequest
+2025-03-28 15:55:42,799 - DEBUG - Dispatching request of type CallToolRequest
+2025-03-28 15:55:42,802 - DEBUG - Response sent
+2025-03-28 15:56:29,185 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:56:29,187 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:56:29,187 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:56:29,187 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:56:29,188 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:56:29,188 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:56:29,188 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:56:29,204 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:56:29,206 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001A204238AF0>
+2025-03-28 15:56:29,207 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:56:29,207 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:56:29,208 - DEBUG - Response sent
+2025-03-28 15:56:29,214 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001A2042397B0>
+2025-03-28 15:56:29,216 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:56:29,216 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:56:29,216 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:56:29,217 - DEBUG - Extracted topic: 草图
+2025-03-28 15:56:29,218 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:56:29,218 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:56:29,219 - DEBUG - Processing entity: 草图
+2025-03-28 15:56:29,219 - DEBUG - Context information built successfully
+2025-03-28 15:56:29,220 - DEBUG - Sending sampling request
+2025-03-28 15:56:29,228 - DEBUG - Received response from sampling request
+2025-03-28 15:56:29,228 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:56:29,230 - DEBUG - Response sent
+2025-03-28 15:57:07,604 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:57:07,607 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:57:07,607 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:57:07,607 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:57:07,607 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:57:07,607 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:57:07,607 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:57:07,626 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:57:07,628 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001AC2F978B20>
+2025-03-28 15:57:07,628 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:57:07,629 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:57:07,630 - DEBUG - Response sent
+2025-03-28 15:57:07,634 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001AC2F9797E0>
+2025-03-28 15:57:07,635 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:57:07,636 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:57:07,636 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:57:07,637 - DEBUG - Extracted topic: 草图
+2025-03-28 15:57:07,638 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:57:07,638 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:57:07,638 - DEBUG - Processing entity: 草图
+2025-03-28 15:57:07,639 - DEBUG - Context information built successfully
+2025-03-28 15:57:07,639 - DEBUG - Sending sampling request
+2025-03-28 15:57:07,647 - DEBUG - Received response from sampling request
+2025-03-28 15:57:07,647 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:57:07,649 - DEBUG - Response sent
+2025-03-28 15:57:07,653 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001AC2F978CA0>
+2025-03-28 15:57:07,653 - INFO - Processing request of type ListToolsRequest
+2025-03-28 15:57:07,654 - DEBUG - Dispatching request of type ListToolsRequest
+2025-03-28 15:57:07,656 - DEBUG - Response sent
+2025-03-28 15:57:07,681 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001AC2F9799C0>
+2025-03-28 15:57:07,682 - INFO - Processing request of type CallToolRequest
+2025-03-28 15:57:07,682 - DEBUG - Dispatching request of type CallToolRequest
+2025-03-28 15:57:07,685 - DEBUG - Response sent
+2025-03-28 15:58:10,421 - INFO - Starting Memory MCP Server with memory path: C:\Users\38957\Documents\GitHub\mcp_simple_example\memory.json
+2025-03-28 15:58:10,422 - DEBUG - Initializing server 'memory-manager'
+2025-03-28 15:58:10,422 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-03-28 15:58:10,422 - DEBUG - Registering handler for ListResourcesRequest
+2025-03-28 15:58:10,423 - DEBUG - Registering handler for ReadResourceRequest
+2025-03-28 15:58:10,423 - DEBUG - Registering handler for ListToolsRequest
+2025-03-28 15:58:10,423 - DEBUG - Registering handler for CallToolRequest
+2025-03-28 15:58:10,436 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-03-28 15:58:10,437 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000267FF838B50>
+2025-03-28 15:58:10,438 - INFO - Processing request of type ListResourceTemplatesRequest
+2025-03-28 15:58:10,438 - DEBUG - Dispatching request of type ListResourceTemplatesRequest
+2025-03-28 15:58:10,439 - DEBUG - Response sent
+2025-03-28 15:58:10,444 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000267FF839810>
+2025-03-28 15:58:10,444 - INFO - Processing request of type ReadResourceRequest
+2025-03-28 15:58:10,445 - DEBUG - Dispatching request of type ReadResourceRequest
+2025-03-28 15:58:10,445 - DEBUG - Reading resource with URI: memory://short-story/%E8%8D%89%E5%9B%BE
+2025-03-28 15:58:10,446 - DEBUG - Extracted topic: 草图
+2025-03-28 15:58:10,447 - DEBUG - Search result: 2 entities, 0 relations
+2025-03-28 15:58:10,447 - DEBUG - Processing entity: 设计学工具
+2025-03-28 15:58:10,448 - DEBUG - Processing entity: 草图
+2025-03-28 15:58:10,448 - DEBUG - Context information built successfully
+2025-03-28 15:58:10,448 - DEBUG - Sending sampling request
+2025-03-28 15:58:10,456 - DEBUG - Received response from sampling request
+2025-03-28 15:58:10,457 - DEBUG - result.content.text: This is a response from the sampling callback
+2025-03-28 15:58:10,458 - DEBUG - Response sent
+2025-03-28 15:58:10,463 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000267FF838CD0>
+2025-03-28 15:58:10,463 - INFO - Processing request of type ListToolsRequest
+2025-03-28 15:58:10,464 - DEBUG - Dispatching request of type ListToolsRequest
+2025-03-28 15:58:10,466 - DEBUG - Response sent
+2025-03-28 15:58:10,497 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x00000267FF8399F0>
+2025-03-28 15:58:10,497 - INFO - Processing request of type CallToolRequest
+2025-03-28 15:58:10,498 - DEBUG - Dispatching request of type CallToolRequest
+2025-03-28 15:58:10,501 - DEBUG - Response sent
