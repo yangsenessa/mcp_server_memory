@@ -184,6 +184,16 @@ async function getResources (port, sessionId) {
   )
 }
 
+async function getResourceTemplates (port, sessionId) {
+  return sendJsonRpcRequest(
+    port,
+    sessionId,
+    'resources/templates/list',
+    {},
+    'getResourceTemplates'
+  )
+}
+
 // 读取特定资源 - 使用通用请求函数
 async function readResource (port, sessionId, uri) {
   return sendJsonRpcRequest(
@@ -203,7 +213,7 @@ async function getToolsList (port, sessionId) {
 }
 
 // 调用 fetch 工具 - 使用通用请求函数
-async function callFetchTool (port, sessionId, url) {
+async function callFetchTool (port, sessionId, name) {
   return sendJsonRpcRequest(
     port,
     sessionId,
@@ -211,7 +221,7 @@ async function callFetchTool (port, sessionId, url) {
     {
       name: 'fetch',
       arguments: {
-        url: url
+        url: name
       }
     },
     3
