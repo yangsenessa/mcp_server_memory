@@ -12,7 +12,7 @@ from starlette.applications import Starlette
 from starlette.routing import Mount, Route 
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
-
+from urllib.parse import unquote
 
 # 定义数据结构 
 @dataclass
@@ -177,6 +177,7 @@ class KnowledgeGraphManager:
 
     async def search_nodes(self, query: str) -> KnowledgeGraph:
         graph = await self.load_graph()
+        #print(f"Searching for nodes with query: {query}")
         
         # 过滤实体
         filtered_entities = [e for e in graph.entities 
@@ -187,6 +188,8 @@ class KnowledgeGraphManager:
         
         # 创建过滤后的实体名称集合
         filtered_entity_names = {e.name for e in filtered_entities}
+
+        #print(f"filtered_entities: {filtered_entity_names}")
         
         # 过滤关系
         filtered_relations = [r for r in graph.relations 
@@ -245,7 +248,7 @@ def init_server(memory_path):
             except Exception:
                 pass
             return "unknown"
-        print(f"notification_options: {notification_options.resources_changed}")
+        # print(f"notification_options: {notification_options.resources_changed}")
         return InitializationOptions(
             server_name=server.name,
             server_version=server.version if server.version else pkg_version("mcp"),
@@ -272,6 +275,7 @@ def init_server(memory_path):
     # 资源模板功能
     @app.list_resource_templates()
     async def handle_list_resource_templates() -> list[types.ResourceTemplate]:
+        # A URI template (according to RFC 6570)
         return [
             types.ResourceTemplate(
                 name="memory_template",
@@ -288,7 +292,7 @@ def init_server(memory_path):
             types.Resource(
                 name="memory_resource",
                 uri="memory://short-story/default",
-                description="从知识图谱中读取相关信息并生成短故事",
+                description="从知识图谱中读取相关信息并生成短故事，默认主题为default",
                 mimeType="text/plain"
             )
         ]
@@ -296,83 +300,67 @@ def init_server(memory_path):
     # 创建读取资源的代码
     @app.read_resource()
     async def handle_read_resource(uri) -> list[types.TextResourceContents]:
-        print(f"Reading resource with URI: {uri}")
-        # 从 URI 中提取主题名称
-        # 例如从 "memory://short-story/cat" 提取 "cat"
-        topic = str(uri).split('/')[-1]
-        
-        # 搜索知识图谱中与主题相关的信息
-        search_result = await graph_manager.search_nodes(topic)
-        
-        # 构建上下文信息
-        context = []
-        for entity in search_result.entities:
-            context.append(f"实体名称: {entity.name}")
-            context.append(f"实体类型: {entity.entityType}")
-            context.append("相关观察:")
-            for obs in entity.observations:
-                context.append(f"- {obs}")
-            context.append("")  # 添加空行分隔
+        # print(f"Reading resource with URI: {uri}")
+        # 注意返回的是str 而不是list[types.TextResourceContents]
+        try:
+            # 检查URI格式
+            if not str(uri).startswith("memory://short-story/"):
+                raise ValueError(f"Invalid URI format: {uri}")
+                
+            # 从 URI 中提取并解码主题名称
+            # 例如从 "memory://short-story/cat" 提取并解码 "cat"
+            topic = str(uri).split('/')[-1]
             
-        # 如果找到相关信息，返回文本内容
-        if context:
-            content = "以下是与主题相关的已知信息：\n" + "\n".join(context)
-            return [types.TextResourceContents(
-                uri=str(uri),  # 添加 uri 字段
-                text=content,  # 使用 text 而不是 content
-                mime_type="text/plain"
-            )]
-        else:
-            return [types.TextResourceContents(
-                uri=str(uri),  # 添加 uri 字段
-                text=f"未找到与 {topic} 相关的信息",  # 使用 text 而不是 content
-                mime_type="text/plain"
-            )]
-    # @app.resource("memory://short-story/{topic}")
-    # async def generate_short_story(topic: str):
-    #     # 首先搜索知识图谱中与主题相关的信息
-    #     search_result = await graph_manager.search_nodes(topic)
+            topic = unquote(topic)
+            # print(f"topic: {topic}")
+            # 搜索知识图谱中与主题相关的信息
+            search_result = await graph_manager.search_nodes(topic)
+            # print(f"search_result: {search_result}")
+            # 构建上下文信息
+            context = []
+            for entity in search_result.entities:
+                context.append(f"实体名称: {entity.name}")
+                context.append(f"实体类型: {entity.entityType}")
+                context.append("相关观察:")
+                for obs in entity.observations:
+                    context.append(f"- {obs}")
+                context.append("")  # 添加空行分隔
+            # print(f"context: {context}") 
+
+            # 构建消息列表
+            messages=[] 
+
+            if context:
+                content = "以下是与主题相关的已知信息：\n" + "\n".join(context)  
+            else:
+                content= f"未找到与 {topic} 相关的信息"
+            
+            messages.append(
+                     types.SamplingMessage(
+                        role="assistant",
+                        content=types.TextContent(type="text", text=content)
+                    )
+            )
+            
+            # 添加用户请求
+            
+            prompt = f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
+            messages.append(
+                types.SamplingMessage(
+                    role="user",
+                    content=types.TextContent(type="text", text=prompt)
+                )
+            )
+
+            # 发送采样请求
+            result = await app.request_context.session.create_message(
+                max_tokens=1024,
+                messages=messages
+            )
+            return result.content.text
+        except Exception as e:
+            return f"处理资源时出错: {str(e)}"
         
-    #     # 构建上下文信息
-    #     context = []
-    #     for entity in search_result.entities:
-    #         context.append(f"实体名称: {entity.name}")
-    #         context.append(f"实体类型: {entity.entityType}")
-    #         context.append("相关观察:")
-    #         for obs in entity.observations:
-    #             context.append(f"- {obs}")
-    #         context.append("")  # 添加空行分隔
-
-    #     # 构建消息列表
-    #     messages = []
-        
-    #     # 如果有上下文信息，添加为assistant消息
-    #     if context:
-    #         context_text = "以下是与主题相关的已知信息：\n" + "\n".join(context)
-    #         messages.append(
-    #             types.SamplingMessage(
-    #                 role="assistant",
-    #                 content=types.TextContent(type="text", text=context_text)
-    #             )
-    #         )
-        
-    #     # 添加用户请求
-    #     prompt = f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
-    #     messages.append(
-    #         types.SamplingMessage(
-    #             role="user",
-    #             content=types.TextContent(type="text", text=prompt)
-    #         )
-    #     )
-
-    #     # 发送采样请求
-    #     result = await app.get_context().session.create_message(
-    #         max_tokens=1024,
-    #         messages=messages
-    #     )
-
-    #     return result.content.text
-
 
     @app.list_tools()
     async def handle_list_tools():
