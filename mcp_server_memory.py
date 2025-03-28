@@ -313,7 +313,16 @@ def init_server(memory_path, log_level=logging.CRITICAL):
     # 资源
     @app.list_resources()
     async def handle_list_resources() -> list[types.Resource]:
-        return [
+        graph = await graph_manager.read_graph()
+        entity_names = [entity.name for entity in graph.entities]
+        logger.debug(f"handle_list_resources: {len(entity_names)} nodes found")
+
+        return [types.Resource(
+                name=name,
+                uri=f"memory://short-story/{name}",
+                description=f"主题{name}的短故事",
+                mimeType="text/plain"
+            )  for name in entity_names] +[
             types.Resource(
                 name="topic",
                 uri="memory://topic",

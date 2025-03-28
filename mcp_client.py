@@ -69,7 +69,7 @@ async def run():
                         print("未找到资源内容")
                     print("--------------------------------")
                     # 请求资源
-                    result = await session.read_resource("memory://short-story/草图")
+                    result = await session.read_resource("memory://topic")
                     # 格式化输出资源内容
                     if result.contents:
                         for content in result.contents:
