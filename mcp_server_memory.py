@@ -3,8 +3,9 @@ import sys
 import json
 from pathlib import Path
 from dataclasses import dataclass
-
-from mcp.server import Server 
+from typing import Any
+from mcp.server import Server, NotificationOptions
+from mcp.server.models import InitializationOptions
 from mcp.server.sse import SseServerTransport
 import mcp.types as types
 from starlette.applications import Starlette
@@ -225,7 +226,48 @@ def init_server(memory_path):
     
     graph_manager = KnowledgeGraphManager(str(absolute_memory_path))
 
-    app = Server("memory-manager")
+    app = Server("memory-manager",
+                 version="1.1.0",
+                 instructions="This is a memory manager server for short story generation")
+
+    # 将custom_initialization_options定义为独立函数
+    def custom_initialization_options(
+        server,  # 改为server参数而不是self
+        notification_options: NotificationOptions | None = None,
+        experimental_capabilities: dict[str, dict[str, Any]] | None = None,
+    ) -> InitializationOptions:
+        def pkg_version(package: str) -> str:
+            try:
+                from importlib.metadata import version
+                v = version(package)
+                if v is not None:
+                    return v
+            except Exception:
+                pass
+            return "unknown"
+        print(f"notification_options: {notification_options.resources_changed}")
+        return InitializationOptions(
+            server_name=server.name,
+            server_version=server.version if server.version else pkg_version("mcp"),
+            capabilities=server.get_capabilities(
+                notification_options or NotificationOptions(
+                    resources_changed=True,
+                    tools_changed=True
+                ),
+                experimental_capabilities or {},
+            ),
+            instructions=server.instructions,
+        )
+    
+    # 修改自定义初始化选项方法，使用lambda包装
+    app.create_initialization_options = lambda self=app: custom_initialization_options(
+        self,
+        notification_options=NotificationOptions(
+            resources_changed=True,
+            tools_changed=True
+        ),
+        experimental_capabilities={"mix": {}}
+    )
 
     # 资源模板功能
     @app.list_resource_templates()
@@ -234,6 +276,18 @@ def init_server(memory_path):
             types.ResourceTemplate(
                 name="memory_template",
                 uriTemplate="memory://short-story/{topic}",
+                description="从知识图谱中读取相关信息并生成短故事",
+                mimeType="text/plain"
+            )
+        ]
+
+    # 资源
+    @app.list_resources()
+    async def handle_list_resources() -> list[types.Resource]:
+        return [
+            types.Resource(
+                name="memory_resource",
+                uri="memory://short-story/default",
                 description="从知识图谱中读取相关信息并生成短故事",
                 mimeType="text/plain"
             )
