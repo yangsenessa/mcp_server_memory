@@ -313,8 +313,8 @@ def init_server(memory_path, log_level=logging.CRITICAL):
         return [
             types.Resource(
                 name="memory_resource",
-                uri="memory://short-story/default",
-                description="从知识图谱中读取相关信息并生成短故事，默认主题为default",
+                uri="memory://short-story/all",
+                description="从知识图谱中读取生成短故事的主题",
                 mimeType="text/plain"
             )
         ]
@@ -336,6 +336,14 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             topic = str(uri).split('/')[-1]
             topic = unquote(topic)
             logger.debug(f"Extracted topic: {topic}")
+            
+            # 处理 "all" 请求 - 返回所有节点名称
+            if topic == "all":
+                graph = await graph_manager.read_graph()
+                entity_names = [entity.name for entity in graph.entities]
+                content = "\n".join(f"- {name}" for name in entity_names)
+                logger.debug(f"Returning all node names: {len(entity_names)} nodes found")
+                return content
             
             # 搜索知识图谱中与主题相关的信息
             search_result = await graph_manager.search_nodes(topic)
