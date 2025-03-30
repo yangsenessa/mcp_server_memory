@@ -297,6 +297,137 @@ def init_server(memory_path, log_level=logging.CRITICAL):
         experimental_capabilities={"mix": {}}
     )
 
+
+
+    # 添加 prompt 功能
+    @app.list_prompts()
+    async def handle_list_prompts() -> list[types.Prompt]:
+        return [
+            types.Prompt(
+                name="memory_chat",
+                description="与记忆助手进行对话，助手会记住用户信息并更新知识图谱",
+                systemPrompt="""
+Follow these steps for each interaction:
+
+1. User Identification:
+   - You should assume that you are interacting with default_user
+   - If you have not identified default_user, proactively try to do so.
+
+2. Memory Retrieval:
+   - Always begin your chat by saying only "Remembering..." and retrieve all relevant information from your knowledge graph
+   - Always refer to your knowledge graph as your "memory"
+
+3. Memory
+   - While conversing with the user, be attentive to any new information that falls into these categories:
+     a) Basic Identity (age, gender, location, job title, education level, etc.)
+     b) Behaviors (interests, habits, etc.)
+     c) Preferences (communication style, preferred language, etc.)
+     d) Goals (goals, targets, aspirations, etc.)
+     e) Relationships (personal and professional relationships up to 3 degrees of separation)
+
+4. Memory Update:
+   - If any new information was gathered during the interaction, update your memory as follows:
+     a) Create entities for recurring organizations, people, and significant events
+     b) Connect them to the current entities using relations
+     b) Store facts about them as observations
+"""
+            )
+        ]
+        
+    @app.get_prompt()
+    async def handle_get_prompt(name: str, arguments: dict[str, str] | None) -> types.GetPromptResult:
+        logger = logging.getLogger(__name__)
+        logger.debug(f"Getting prompt: {name} with arguments: {arguments}")
+        
+        if name != "memory_chat":
+            raise ValueError(f"Unknown prompt: {name}")
+            
+        # 获取当前请求上下文
+        context = app.request_context
+        # 从上下文中获取请求 ID
+        request_id = context.request_id
+        
+        # 从知识图谱中获取用户信息
+        graph = await graph_manager.read_graph()
+        
+        # 查找 default_user 实体
+        default_user = next((e for e in graph.entities if e.name == "default_user"), None)
+        
+        # 构建用户信息上下文
+        user_context = ""
+        if default_user:
+            user_context = f"用户信息:\n名称: {default_user.name}\n类型: {default_user.entityType}\n观察:\n"
+            for obs in default_user.observations:
+                user_context += f"- {obs}\n"
+                
+            # 添加与用户相关的关系
+            related_relations = [r for r in graph.relations if r.from_ == "default_user" or r.to == "default_user"]
+            if related_relations:
+                user_context += "\n用户关系:\n"
+                for relation in related_relations:
+                    if relation.from_ == "default_user":
+                        user_context += f"- {relation.from_} {relation.relationType} {relation.to}\n"
+                    else:
+                        user_context += f"- {relation.to} {relation.relationType} {relation.from_}\n"
+        
+        # 构建消息列表
+        messages = []
+        
+        # 添加系统消息
+        system_prompt = """
+Follow these steps for each interaction:
+
+1. User Identification:
+   - You should assume that you are interacting with default_user
+   - If you have not identified default_user, proactively try to do so.
+
+2. Memory Retrieval:
+   - Always begin your chat by saying only "Remembering..." and retrieve all relevant information from your knowledge graph
+   - Always refer to your knowledge graph as your "memory"
+
+3. Memory
+   - While conversing with the user, be attentive to any new information that falls into these categories:
+     a) Basic Identity (age, gender, location, job title, education level, etc.)
+     b) Behaviors (interests, habits, etc.)
+     c) Preferences (communication style, preferred language, etc.)
+     d) Goals (goals, targets, aspirations, etc.)
+     e) Relationships (personal and professional relationships up to 3 degrees of separation)
+
+4. Memory Update:
+   - If any new information was gathered during the interaction, update your memory as follows:
+     a) Create entities for recurring organizations, people, and significant events
+     b) Connect them to the current entities using relations
+     b) Store facts about them as observations
+"""
+        
+        if user_context:
+            system_prompt += f"\n\n当前用户记忆:\n{user_context}"
+        
+        messages.append(
+            types.SamplingMessage(
+                role="system",
+                content=types.TextContent(type="text", text=system_prompt)
+            )
+        )
+        
+        # 添加用户消息（如果有参数）
+        if arguments and "message" in arguments:
+            messages.append(
+                types.SamplingMessage(
+                    role="user",
+                    content=types.TextContent(type="text", text=arguments["message"])
+                )
+            )
+        
+        return types.GetPromptResult(
+            prompt=types.Prompt(
+                name="memory_chat",
+                description="与记忆助手进行对话，助手会记住用户信息并更新知识图谱",
+                systemPrompt=system_prompt
+            ),
+            messages=messages
+        )
+
     # 资源模板功能
     @app.list_resource_templates()
     async def handle_list_resource_templates() -> list[types.ResourceTemplate]:
@@ -309,7 +440,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
                 mimeType="text/plain"
             )
         ]
-
+    
     # 资源
     @app.list_resources()
     async def handle_list_resources() -> list[types.Resource]:
