@@ -292,7 +292,8 @@ def init_server(memory_path, log_level=logging.CRITICAL):
         self,
         notification_options=NotificationOptions(
             resources_changed=True,
-            tools_changed=True
+            tools_changed=True,
+            prompts_changed=True
         ),
         experimental_capabilities={"mix": {}}
     )
@@ -516,12 +517,12 @@ Follow these steps for each interaction:
                 content = "以下是与主题相关的已知信息：\n" + "\n".join(context)
                 logger.debug("Context information built successfully")
             else:
-                content = f"未找到与 {topic} 相关的信息"
+                content = f"未找到与 [{topic}] 相关的信息"
                 logger.warning(f"No information found for topic: {topic}")
             
             
             # 添加用户请求
-            prompt = content+"\n------\n"+f"请基于以上背景信息（如果有的话），写一个关于{topic}的短故事。"
+            prompt = f"用户输入:[{topic}]"+"\n------\n"+f"背景信息:{content}"+"\n------\n"+f"如果是有背景信息，则结合用户输入写一个关于[{topic}]的短故事。如果没有背景信息，则根据用户输入的要求进行。"
             messages.append(
                 types.SamplingMessage(
                     role="user",
