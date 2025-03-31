@@ -17,7 +17,7 @@ from urllib.parse import unquote
 import logging
 from datetime import datetime
 
-MEMORY_VERSION="1.1.0"
+MEMORY_VERSION="1.2.0"
 
 # 定义数据结构 
 @dataclass
@@ -41,6 +41,16 @@ class KnowledgeGraphManager:
     def __init__(self, memory_path: str):
         self.memory_path = Path(memory_path).expanduser()
         self.memory_path.parent.mkdir(parents=True, exist_ok=True)
+        self.change_listeners = []  # 添加变更监听器列表
+
+    def add_change_listener(self, listener):
+        """添加知识图谱变更监听器"""
+        self.change_listeners.append(listener)
+        
+    def notify_changes(self):
+        """通知所有监听器知识图谱已变更"""
+        for listener in self.change_listeners:
+            listener()
 
     async def load_graph(self) -> KnowledgeGraph:
         try:
@@ -98,6 +108,8 @@ class KnowledgeGraphManager:
         except Exception as e:
             print(f"Error saving graph: {e}")
             raise
+        
+        self.notify_changes()  # 通知变更
 
     async def _read_file(self) -> str:
         with open(self.memory_path, "r", encoding="utf-8") as f:
@@ -112,7 +124,7 @@ class KnowledgeGraphManager:
         new_entities = [e for e in entities 
                        if not any(ex.name == e.name for ex in graph.entities)]
         graph.entities.extend(new_entities)
-        await self.save_graph(graph)
+        await self.save_graph(graph) 
         return new_entities
 
     async def create_relations(self, relations: list) -> list:
@@ -154,7 +166,7 @@ class KnowledgeGraphManager:
         graph.relations = [r for r in graph.relations 
                          if r.from_ not in entity_names and 
                          r.to not in entity_names]
-        await self.save_graph(graph)
+        await self.save_graph(graph) 
 
     async def delete_observations(self, deletions: list) -> None:
         graph = await self.load_graph()
@@ -287,7 +299,7 @@ def init_server(memory_path, log_level=logging.CRITICAL):
             instructions=server.instructions,
         )
     
-    # 修改自定义初始化选项方法，使用lambda包装
+    # 修改自定义初始化选项方法，确保启用资源变更通知
     app.create_initialization_options = lambda self=app: custom_initialization_options(
         self,
         notification_options=NotificationOptions(
@@ -297,8 +309,26 @@ def init_server(memory_path, log_level=logging.CRITICAL):
         ),
         experimental_capabilities={"mix": {}}
     )
-
-
+    
+    # 添加资源变更通知函数
+    async def notify_resources_changed():
+        """通知客户端资源列表已变更"""
+        logger = logging.getLogger(__name__)
+        logger.debug("发送资源变更通知")
+        try:
+            await app.request_context.session.send_notification(
+                types.ResourcesChangedNotification()
+            )
+        except Exception as e:
+            logger.error(f"发送资源变更通知失败: {e}")
+    
+    # 将通知函数添加为知识图谱变更监听器
+    def on_graph_changed():
+        """当知识图谱变更时触发异步通知"""
+        import asyncio
+        asyncio.create_task(notify_resources_changed())
+    
+    graph_manager.add_change_listener(on_graph_changed)
 
     # 添加 prompt 功能
     @app.list_prompts()
@@ -522,7 +552,7 @@ Follow these steps for each interaction:
             
             
             # 添加用户请求
-            prompt = f"用户输入:[{topic}]"+"\n------\n"+f"背景信息:{content}"+"\n------\n"+f"如果是有背景信息，则结合用户输入写一个关于[{topic}]的短故事。如果没有背景信息，则根据用户输入的要求进行。"
+            prompt = f"<userInput>{topic}</userInput>"+"\n------\n"+f"<context>{content}</context>"+"\n------\n"+"<story>200字以内，深刻体现背景信息，重点知识点标注出来，并附带知识点解释</story>"+f"\n\n要求：如果是有<context>，则结合<userInput>和<context>写一个短故事，故事要求见<story>。如果没有<context>信息，则根据<userInput>的要求进行。"
             messages.append(
                 types.SamplingMessage(
                     role="user",
