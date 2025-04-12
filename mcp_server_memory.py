@@ -1086,6 +1086,227 @@ if __name__ == "__main__":
                                             }
                                         }
                                     }
+                                },
+                                {
+                                    "name": "tools/list",
+                                    "description": "列出所有可用工具"
+                                },
+                                {
+                                    "name": "tools/call",
+                                    "description": "调用工具",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "description": "工具名称"
+                                            },
+                                            "arguments": {
+                                                "type": "object",
+                                                "description": "工具参数"
+                                            }
+                                        },
+                                        "required": ["name"]
+                                    }
+                                },
+                                {
+                                    "name": "create_entities",
+                                    "description": "创建多个新实体到知识图谱中",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "entities": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {"type": "string"},
+                                                        "entityType": {"type": "string"},
+                                                        "observations": {
+                                                            "type": "array",
+                                                            "items": {"type": "string"}
+                                                        }
+                                                    },
+                                                    "required": ["name", "entityType", "observations"]
+                                                }
+                                            }
+                                        },
+                                        "required": ["entities"]
+                                    }
+                                },
+                                {
+                                    "name": "create_relations",
+                                    "description": "创建多个实体间的关系到知识图谱中",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "relations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "from_": {"type": "string"},
+                                                        "to": {"type": "string"},
+                                                        "relationType": {"type": "string"}
+                                                    },
+                                                    "required": ["from_", "to", "relationType"]
+                                                }
+                                            }
+                                        },
+                                        "required": ["relations"]
+                                    }
+                                },
+                                {
+                                    "name": "add_observations",
+                                    "description": "为已存在的实体添加新的观察",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "observations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "entityName": {"type": "string"},
+                                                        "contents": {
+                                                            "type": "array",
+                                                            "items": {"type": "string"}
+                                                        }
+                                                    },
+                                                    "required": ["entityName", "contents"]
+                                                }
+                                            }
+                                        },
+                                        "required": ["observations"]
+                                    }
+                                },
+                                {
+                                    "name": "delete_entities",
+                                    "description": "删除多个实体及其关系",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "entityNames": {
+                                                "type": "array",
+                                                "items": {"type": "string"}
+                                            }
+                                        },
+                                        "required": ["entityNames"]
+                                    }
+                                },
+                                {
+                                    "name": "delete_observations",
+                                    "description": "从实体中删除特定观察",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "deletions": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "entityName": {"type": "string"},
+                                                        "observations": {
+                                                            "type": "array",
+                                                            "items": {"type": "string"}
+                                                        }
+                                                    },
+                                                    "required": ["entityName", "observations"]
+                                                }
+                                            }
+                                        },
+                                        "required": ["deletions"]
+                                    }
+                                },
+                                {
+                                    "name": "delete_relations",
+                                    "description": "从图谱中删除多个关系",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "relations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "from_": {"type": "string"},
+                                                        "to": {"type": "string"},
+                                                        "relationType": {"type": "string"}
+                                                    },
+                                                    "required": ["from_", "to", "relationType"]
+                                                }
+                                            }
+                                        },
+                                        "required": ["relations"]
+                                    }
+                                },
+                                {
+                                    "name": "read_graph",
+                                    "description": "读取整个知识图谱",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {}
+                                    }
+                                },
+                                {
+                                    "name": "search_nodes",
+                                    "description": "在图谱中搜索节点",
+                                    "inputSchema": {
+                                        "type": "object", 
+                                        "properties": {
+                                            "query": {"type": "string"}
+                                        },
+                                        "required": ["query"]
+                                    }
+                                },
+                                {
+                                    "name": "open_nodes",
+                                    "description": "通过名称打开特定节点",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "names": {
+                                                "type": "array",
+                                                "items": {"type": "string"}
+                                            }
+                                        },
+                                        "required": ["names"]
+                                    }
+                                },
+                                {
+                                    "name": "prompts/list",
+                                    "description": "列出所有可用的提示模板"
+                                },
+                                {
+                                    "name": "prompts/get",
+                                    "description": "获取特定提示模板",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {"type": "string"},
+                                            "arguments": {"type": "object"}
+                                        },
+                                        "required": ["name"]
+                                    }
+                                },
+                                {
+                                    "name": "resources/list",
+                                    "description": "列出所有可用资源"
+                                },
+                                {
+                                    "name": "resources/templates/list",
+                                    "description": "列出所有资源模板"
+                                },
+                                {
+                                    "name": "resources/read",
+                                    "description": "读取特定资源",
+                                    "inputSchema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "uri": {"type": "string"}
+                                        },
+                                        "required": ["uri"]
+                                    }
                                 }
                             ]
                         },
