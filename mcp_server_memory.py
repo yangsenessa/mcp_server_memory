@@ -1088,11 +1088,11 @@ if __name__ == "__main__":
                                     }
                                 },
                                 {
-                                    "name": "tools/list",
+                                    "name": "tools_list",
                                     "description": "列出所有可用工具"
                                 },
                                 {
-                                    "name": "tools/call",
+                                    "name": "tools_call",
                                     "description": "调用工具",
                                     "inputSchema": {
                                         "type": "object",
@@ -1274,11 +1274,11 @@ if __name__ == "__main__":
                                     }
                                 },
                                 {
-                                    "name": "prompts/list",
+                                    "name": "prompts_list",
                                     "description": "列出所有可用的提示模板"
                                 },
                                 {
-                                    "name": "prompts/get",
+                                    "name": "prompts_get",
                                     "description": "获取特定提示模板",
                                     "inputSchema": {
                                         "type": "object",
@@ -1290,15 +1290,15 @@ if __name__ == "__main__":
                                     }
                                 },
                                 {
-                                    "name": "resources/list",
+                                    "name": "resources_list",
                                     "description": "列出所有可用资源"
                                 },
                                 {
-                                    "name": "resources/templates/list",
+                                    "name": "resources_templates_list",
                                     "description": "列出所有资源模板"
                                 },
                                 {
-                                    "name": "resources/read",
+                                    "name": "resources_read",
                                     "description": "读取特定资源",
                                     "inputSchema": {
                                         "type": "object",
